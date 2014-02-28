@@ -30,7 +30,7 @@ public class QuestionModel extends Model {
     {
 		Connection connexion = getConnection();
         ResultSet res = null;
-        String sql = "SELECT * FROM question WHERE code_question=?";
+        String sql = "SELECT * FROM "+this.getTableName()+" WHERE code_question=?";
         Question question = null;
         PreparedStatement requete = null;
         try
@@ -63,12 +63,12 @@ public class QuestionModel extends Model {
      * @return a ArrayList which contains all the Question 
      * @throws DatabaseConnexionException 
      */
-    public ArrayList<Question> getAllQuestion(String pattern) throws DatabaseConnexionException{
+    public ArrayList<Question> getAllQuestionByTexteQuestion(String pattern) throws DatabaseConnexionException{
     	ArrayList<Question> list = new ArrayList<Question>();
     	
     	Connection connexion = super.getConnection();
         ResultSet res = null;
-        String sql = "SELECT * FROM question WHERE texte_question LIKE ?";
+        String sql = "SELECT * FROM "+this.getTableName()+" WHERE texte_question LIKE ?";
         PreparedStatement requete = null;
         try
         {
@@ -77,13 +77,14 @@ public class QuestionModel extends Model {
             res = requete.executeQuery();
             while(res.next())
             {
-                    list.add(new Question(res.getInt("code_question"),res.getString("texte_question"),res.getString("reponse_joueur")));
+                list.add(new Question(res.getInt("code_question"),res.getString("texte_question"),res.getString("reponse_joueur")));
             }
             return list;
         }
         catch(SQLException e)
         {
-                System.err.println("Probleme avec la requete getAllQuestion : " + sql + " " + e);
+            System.err.println("Probleme avec la requete getAllQuestion : " + sql);
+            e.printStackTrace();
         }finally{
         	closeResultSet(res);
             closeStatement(requete);
@@ -104,7 +105,7 @@ public class QuestionModel extends Model {
     	if(question.getCode() != -1) return -1;
     	
     	Connection connexion = getConnection();
-        String sql = "INSERT INTO question (texte_question,reponse_joueur) VALUES (?,?)";
+        String sql = "INSERT INTO "+this.getTableName()+" (texte_question,reponse_joueur) VALUES (?,?)";
         PreparedStatement requete = null;
         ResultSet res = null;
         
@@ -134,7 +135,7 @@ public class QuestionModel extends Model {
 
     /**
      * Call the function delete from the superclass (only for convenient)
-     * @param question
+     * @param question, the question to delete
      * @throws DatabaseConnexionException
      * @throws DeleteMultipleException
      */
