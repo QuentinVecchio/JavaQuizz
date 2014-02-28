@@ -26,4 +26,9 @@ public class PlayerController extends Controller {
 	{
 		return true;
 	}
+	
+	public boolean editPlayer(Player p)
+	{
+		return true;
+	}
 }

@@ -21,11 +21,9 @@ public class Dashboard extends JFrame{
 	private DashboardController controller;
 	private JPanel panelButton = new JPanel();
 	private JButton btnAddPlayer = new JButton("Nouveau joueur");
-	private JButton btnEditPlayer = new JButton("Modification joueur");
-	private JButton btnDelPlayer = new JButton("Suppression joueur");
+	private JButton btnManagePlayer = new JButton("Gestion Joueurs");
 	private JButton btnAddQuestion = new JButton("Nouvelle Question");
-	private JButton btnEditQuestion = new JButton("Modification Question");
-	private JButton btnDelQuestion = new JButton("Suppression Question");
+	private JButton btnManageQuestion = new JButton("Gestion Questions");
 	private JButton btnQuizz = new JButton("Quizz");
 	private JButton btnUser = new JButton("Profil");
 	private JButton btnQuit = new JButton("Quitter");
@@ -60,7 +58,7 @@ public class Dashboard extends JFrame{
 	
 	private void panelButtonConstructor()
 	{
-		panelButton.setLayout(new GridLayout(10,1));
+		panelButton.setLayout(new GridLayout(9,1));
 		//Affichage du nom
 			JLabel hello = new JLabel(" Bonjour " + this.p.getName(),SwingConstants.CENTER);
 			panelButton.add(hello);
@@ -75,21 +73,15 @@ public class Dashboard extends JFrame{
 		//Construction bouton add Gamer
 			panelButton.add(btnAddPlayer);
 			btnAddPlayer.addActionListener(new ActionAddGamer());
-		//Construction bouton edit Gamer
-			panelButton.add(btnEditPlayer);
-			btnAddPlayer.addActionListener(new ActionEditGamer());
-		//Construction bouton delete Gamer
-			panelButton.add(btnDelPlayer);
-			btnAddPlayer.addActionListener(new ActionDelGamer());
+		//Construction bouton manage Gamer
+			panelButton.add(btnManagePlayer);
+			btnManagePlayer.addActionListener(new ActionManagePlayer());
 		//Construction bouton add Question
 			panelButton.add(btnAddQuestion);
 			btnAddPlayer.addActionListener(new ActionAddQuestion());
 		//Construction bouton edit Question
-			panelButton.add(btnEditQuestion);
-			btnAddPlayer.addActionListener(new ActionEditQuestion());
-		//Construction bouton delete Question
-			panelButton.add(btnDelQuestion);
-			btnAddPlayer.addActionListener(new ActionDelQuestion());
+			panelButton.add(btnManageQuestion);
+			btnAddPlayer.addActionListener(new ActionManageQuestion());
 	}
 	
 	private void panelPlayer()
@@ -111,12 +103,7 @@ public class Dashboard extends JFrame{
 		}
 	}
 	
-	class ActionEditGamer implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	
-	class ActionDelGamer implements ActionListener{
+	class ActionManagePlayer implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 		}
 	}
@@ -126,12 +113,7 @@ public class Dashboard extends JFrame{
 		}
 	}
 	
-	class ActionEditQuestion implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	
-	class ActionDelQuestion implements ActionListener{
+	class ActionManageQuestion implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 		}
 	}
