@@ -1,6 +1,7 @@
 package fr.quizz.controller;
 
 import fr.quizz.core.Player;
+import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.model.PlayerModel;
 import fr.quizz.view.player.Login;
 
@@ -17,7 +18,7 @@ public class PlayerController extends Controller {
 		g.showDialog();
 	}
 	
-	public Player playerExists(String login, String password){
+	public Player playerExists(String login, String password) throws DatabaseConnexionException{
 		return model.exist(login, password);
 	}
 

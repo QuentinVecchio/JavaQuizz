@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import fr.quizz.controller.DashboardController;
 import fr.quizz.controller.PlayerController;
 import fr.quizz.core.Player;
+import fr.quizz.exception.DatabaseConnexionException;
 
 public class Login extends JDialog {
 
@@ -74,14 +75,21 @@ public class Login extends JDialog {
 			final String login = m_login.getText();
 			final String password = m_password.getText();
 			if(login.length() > 0 && password.length() > 0){
-				final Player p = controller.playerExists(login, password);
-				if(p == null){
-					JOptionPane.showMessageDialog(null, "Joueur non trouve dans la base de donnees");
-				}else{
-					DashboardController dC = new DashboardController();
-					setVisible(false);
-					dC.dashboard(p);
-				}			
+				Player p = null;
+				try {
+					p = controller.playerExists(login, password);
+					if(p == null){
+						JOptionPane.showMessageDialog(null, "Joueur non trouve dans la base de donnees");
+					}else{
+						DashboardController dC = new DashboardController();
+						setVisible(false);
+						dC.dashboard(p);
+					}	
+				} catch (DatabaseConnexionException e1) {
+					JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuee !");
+					e1.printStackTrace();
+				}
+						
 			}else{
 				JOptionPane.showMessageDialog(null, "Erreur un ou plusieurs champs vide(s)");
 			}

@@ -6,22 +6,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fr.quizz.core.Player;
-
+import fr.quizz.exception.DatabaseConnexionException;
+	/**
+	 * 	 This class allow to manage the player table of the database
+	 * @author Matthieu CLIN, Quentin VECCHIO
+	 */
 public class PlayerModel extends Model {
 
 	public PlayerModel() {
-		super();
+		super("player");
 		
 	}
 
 	
 	/**
-	 * Function which check if a Player is registered in the database
+	 * The function checks if a Player is registered in the database
 	 * @param name the name of the Player
-	 * @param password his password
+	 * @param password its password
 	 * @return an object Player if it is in the database, null otherwise
+	 * @throws DatabaseConnexionException 
 	 */
-	public Player exist(String name, String password)
+	public Player exist(String name, String password) throws DatabaseConnexionException
 	{
 		Connection connexion = getConnection();
 		ResultSet res = null;
@@ -41,7 +46,8 @@ public class PlayerModel extends Model {
 		}
 		catch(SQLException e)
 		{
-			System.err.println("Problème avec la requête exist : " + sql + " " + e);
+			System.err.println("Problème avec la requête exist : " + sql);
+			e.printStackTrace();
 		}finally{
 			closeResultSet(res);
 			closeStatement(requete);
@@ -53,37 +59,39 @@ public class PlayerModel extends Model {
     /**
      * Function which allows to save a Question in database
      * @param question, the question to save
+     * @throws DatabaseConnexionException 
      */
-    public void deletePlayer(Player player){
+    public void deletePlayer(Player player) throws DatabaseConnexionException{
 
     	if(player.getCode() == -1) return;
     	
-    	Connection connexion = super.getConnection();
+    	Connection connexion = getConnection();
         
         PreparedStatement requete = null;
         try
         {
-        		connexion.setAutoCommit(false);
-        		String sql = "DELETE FROM joueur WHERE code_joueur = ? ";
-                requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
-                requete.setInt(1, player.getCode());
-                
-                int res = requete.executeUpdate();
-                System.out.println("res 1er:"+res);
-        		sql = "DELETE FROM quizz WHERE code_joueur = ? ";
-                requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
-                requete.setInt(1, player.getCode());
-                res = requete.executeUpdate();
-                System.out.println("res 2e:"+res);
-                super.commit(connexion);
+    		connexion.setAutoCommit(false);
+    		String sql = "DELETE FROM joueur WHERE code_joueur = ? ";
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
+            requete.setInt(1, player.getCode());
+            
+            int res = requete.executeUpdate();
+            System.out.println("res 1er:"+res);
+    		sql = "DELETE FROM quizz WHERE code_joueur = ? ";
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
+            requete.setInt(1, player.getCode());
+            res = requete.executeUpdate();
+            System.out.println("res 2e:"+res);
+            commit(connexion);
         }
         catch(SQLException e)
         {
-        		super.rollback(connexion);
-                System.err.println("Probleme avec lors de la transaction" + e);
+    		rollback(connexion);
+            System.err.println("Probleme avec lors de la transaction" + e);
+        }finally{
+            closeStatement(requete);
+            closeConnection(connexion);	
         }
-        super.closeStatement(requete);
-        super.closeConnection(connexion);
     }
 
 }
