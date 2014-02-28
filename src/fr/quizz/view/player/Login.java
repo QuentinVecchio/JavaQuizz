@@ -13,8 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.quizz.controller.DashboardController;
 import fr.quizz.controller.PlayerController;
-import fr.quizz.controller.QuestionController;
 import fr.quizz.core.Player;
 
 public class Login extends JDialog {
@@ -40,19 +40,25 @@ public class Login extends JDialog {
 		setSize(new Dimension(300,200));
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
-
-		GridLayout d = new GridLayout(2,2);
-		d.setVgap(10);
-		JPanel p_loginForm = new JPanel(d);
-
-		m_login.setSize(new Dimension(100,20));
+		JPanel panelLogin = new JPanel();
+		JPanel panelMDP = new JPanel();
+		JPanel panelMain = new JPanel();
 		
-		p_loginForm.add(new JLabel("Login:"));
-		p_loginForm.add(m_login);
-		p_loginForm.add(new JLabel("Mot de passe:"));
-		p_loginForm.add(m_password);
+		panelMain.setLayout(new GridLayout(2,1));
+		panelMain.add(panelLogin);
+		panelMain.add(panelMDP);
 		
-		add(p_loginForm, BorderLayout.CENTER);
+		
+		
+		panelLogin.add(new JLabel("Login:"));
+		panelLogin.add(m_login);
+		panelMDP.add(new JLabel("Mot de passe:"));
+		panelMDP.add(m_password);
+		
+		m_login.setPreferredSize(new Dimension(100,30));
+		m_password.setPreferredSize(new Dimension(100,30));
+		
+		add(panelMain, BorderLayout.CENTER);
 		m_logButton.addActionListener(new ActionLogin());
 		add(m_logButton, BorderLayout.SOUTH);
 	}
@@ -72,9 +78,9 @@ public class Login extends JDialog {
 				if(p == null){
 					JOptionPane.showMessageDialog(null, "Joueur non trouve dans la base de donnees");
 				}else{
-					QuestionController qC = new QuestionController();
+					DashboardController dC = new DashboardController();
 					setVisible(false);
-					qC.dashboard(p);
+					dC.dashboard(p);
 				}			
 			}else{
 				JOptionPane.showMessageDialog(null, "Erreur un ou plusieurs champs vide(s)");
