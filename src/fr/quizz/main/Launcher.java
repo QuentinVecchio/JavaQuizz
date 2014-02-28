@@ -1,8 +1,6 @@
 package fr.quizz.main;
 
-import java.sql.Connection;
-
-import fr.quizz.model.Model;
+import fr.quizz.controller.PlayerController;
 
 public class Launcher {
 
@@ -11,7 +9,8 @@ public class Launcher {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Connection c = new Model().getConnection();
+		PlayerController pC = new PlayerController();
+		pC.login();
 	}
 
 }

@@ -5,7 +5,7 @@ public class Player {
 	private String name;
 	private String password;
 	private String mail;
-	
+
 	/**
 	 *  
 	 * @param code
