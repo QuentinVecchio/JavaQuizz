@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
@@ -60,13 +61,12 @@ public class PlayerModel extends Model {
 	}
 
     /**
-     * Function which allows to save a Question in database
-     * @param question, the question to save
+     * Call the function delete from the superclass (only for convenient)
+     * @param question, the player to delete
      * @throws DatabaseConnexionException 
      * @throws DeleteMultipleException 
      */
     public void deletePlayer(Player player) throws DatabaseConnexionException, DeleteMultipleException{
-
     	super.delete(player.getCode());
     }
 
@@ -86,8 +86,7 @@ public class PlayerModel extends Model {
         PreparedStatement requete = null;
         ResultSet res = null;
         
-        try
-        {
+        try{
             requete  = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             requete.setString(1,player.getName());
             requete.setString(2,player.getPassword());
@@ -99,9 +98,8 @@ public class PlayerModel extends Model {
             }else{
             	throw new PlayerNotSaveException("Impossible d'enregistrer l'utilisateur");
             }
-        }
-        catch(SQLException e)
-        {
+            
+        }catch(SQLException e){
         	System.err.println("Probleme avec la requete : " + sql + " " + e);
         }finally{
             closeResultSet(res);
@@ -109,6 +107,39 @@ public class PlayerModel extends Model {
             closeConnection(connexion);        	
         }
         return -1;
+    }
+    
+    /**
+     * Get all the questions where the pattern "pattern" is matched
+     * @param pattern the pattern that must be respect by the question 
+     * @return a ArrayList which contains all the Question 
+     * @throws DatabaseConnexionException 
+     */
+    public ArrayList<Player> getAllQuestion() throws DatabaseConnexionException{
+    	ArrayList<Player> list = new ArrayList<Player>();
+    	
+    	Connection connexion = super.getConnection();
+        ResultSet res = null;
+        String sql = "SELECT * FROM "+this.getTableName();
+        PreparedStatement requete = null;
+        try{
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY); 
+            res = requete.executeQuery();
+            
+            while(res.next()){
+                    list.add(new Player(res.getInt("code_joueur"),res.getString("nom_joueur"),res.getString("mail_joueur"),res.getString("passwd_joueur")));
+            }
+            return list;
+            
+        }catch(SQLException e){
+            System.err.println("Probleme avec la requete getAllQuestion : " + sql);
+            e.printStackTrace();
+        }finally{
+        	closeResultSet(res);
+            closeStatement(requete);
+            closeConnection(connexion);	
+        }
+        return list;
     }
     
     
