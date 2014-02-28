@@ -7,83 +7,61 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import fr.quizz.core.Question;
-
+import fr.quizz.exception.DatabaseConnexionException;
+	/**
+	 * 	 This class allow to manage the ques table of the database
+	 * @author Matthieu CLIN, Quentin VECCHIO
+	 */
 public class QuestionModel extends Model {
 
 	public QuestionModel() {
-                super();
-
-        }
-
-    /**
-     * Return the Question object matches the id "code"
-     * @param code l'ID de la question en BDD
-     * @return an object Question or null if it's not in the database
-     */
-    public Question getQuestion(int code)
-    {
-    		Connection connexion = super.getConnection();
-            ResultSet res = null;
-            String sql = "SELECT * FROM question WHERE code_question=?";
-            Question question = null;
-            PreparedStatement requete = null;
-            try
-            {
-                    requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-                    requete.setInt(1, code);
-
-                    res = requete.executeQuery();
-                    if(res.next())
-                    {
-                            question = new Question(res.getInt("code_question"),res.getString("texte_question"),res.getString("reponse_joueur"));
-                    }
-            }
-            catch(SQLException e)
-            {
-                    System.err.println("Probleme avec la requete exist : " + sql + " " + e);
-            }
-            super.closeResultSet(res);
-            super.closeStatement(requete);
-            super.closeConnection(connexion);
-            return question;
+        super("question");
     }
 
     /**
-     * Get the number of entries in the question table
-     * @return the number of question in the database
+     * Return the Question object matches the id "code"
+     * @param code , the ID of the question in the database
+     * @return an object Question or null if it's not in the database
+     * @throws DatabaseConnexionException 
      */
-    public int getCount()
+    public Question getQuestion(int code) throws DatabaseConnexionException
     {
-    		Connection connexion = super.getConnection();
-            ResultSet res = null;
-            String sql = "SELECT count(*) FROM question";
-            PreparedStatement requete = null;
-            try
-            {
-                    requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+		Connection connexion = getConnection();
+        ResultSet res = null;
+        String sql = "SELECT * FROM question WHERE code_question=?";
+        Question question = null;
+        PreparedStatement requete = null;
+        try
+        {
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            requete.setInt(1, code);
 
-                    res = requete.executeQuery();
-                    if(res.next())
-                    {
-                            return res.getInt(1);
-                    }
-            }
-            catch(SQLException e)
+            res = requete.executeQuery();
+            if(res.next())
             {
-                    System.err.println("Probleme avec la requete exist : " + sql + " " + e);
+                    question = new Question(res.getInt("code_question"),res.getString("texte_question"),res.getString("reponse_joueur"));
             }
-            super.closeResultSet(res);
-            super.closeStatement(requete);
-            super.closeConnection(connexion);
-            return -1;
+            
+            return question;
+        }
+        catch(SQLException e)
+        {
+                System.err.println("Probleme avec la requete exist : " + sql + " " + e);
+        }finally{
+        	closeResultSet(res);
+            closeStatement(requete);
+            closeConnection(connexion);
+        }
+        return question;
     }
 
     /**
      * Get all the questions where the pattern "pattern" is matched
      * @param pattern the pattern that must be respect by the question 
      * @return a ArrayList which contains all the Question 
+     * @throws DatabaseConnexionException 
      */
-    public ArrayList<Question> getAllQuestion(String pattern){
+    public ArrayList<Question> getAllQuestion(String pattern) throws DatabaseConnexionException{
     	ArrayList<Question> list = new ArrayList<Question>();
     	
     	Connection connexion = super.getConnection();
@@ -92,57 +70,62 @@ public class QuestionModel extends Model {
         PreparedStatement requete = null;
         try
         {
-                requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-                requete.setString(1,"%"+pattern+"%"); 
-                res = requete.executeQuery();
-                while(res.next())
-                {
-                        list.add(new Question(res.getInt("code_question"),res.getString("texte_question"),res.getString("reponse_joueur")));
-                }
-                return list;
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            requete.setString(1,"%"+pattern+"%"); 
+            res = requete.executeQuery();
+            while(res.next())
+            {
+                    list.add(new Question(res.getInt("code_question"),res.getString("texte_question"),res.getString("reponse_joueur")));
+            }
+            return list;
         }
         catch(SQLException e)
         {
                 System.err.println("Probleme avec la requete getAllQuestion : " + sql + " " + e);
+        }finally{
+        	closeResultSet(res);
+            closeStatement(requete);
+            closeConnection(connexion);	
         }
-        super.closeResultSet(res);
-        super.closeStatement(requete);
-        super.closeConnection(connexion);
-    	return list;
+        return list;
     }
 
     /**
      * Function which allows to save a Question in database
      * @param question, the question to save
+     * @return the new id of the question or -1 otherwise
+     * @throws DatabaseConnexionException 
      */
-    public int saveQuestion(Question question){
+    public int saveQuestion(Question question) throws DatabaseConnexionException{
 
     	if(question.getCode() != -1) return -1;
     	
-    	Connection connexion = super.getConnection();
+    	Connection connexion = getConnection();
         String sql = "INSERT INTO question (texte_question,reponse_joueur) VALUES (?,?)";
         PreparedStatement requete = null;
         ResultSet res = null;
         
         try
         {
-                requete  = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-                requete.setString(1,question.getText());
-                requete.setString(2,question.getAnswer());                    
-                
-                res = requete.getGeneratedKeys();
-                if(res.next()){
-                	return res.getInt(1);
-                }
+            requete  = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            requete.setString(1,question.getText());
+            requete.setString(2,question.getAnswer());                    
+            
+            res = requete.getGeneratedKeys();
+            if(res.next()){
+            	return res.getInt(1);
+            }else{
+            	//throw new BDDQuestionException();
+            }
         }
         catch(SQLException e)
         {
-                System.err.println("Probleme avec la requete : " + sql + " " + e);
+        	System.err.println("Probleme avec la requete : " + sql + " " + e);
+        }finally{
+            closeResultSet(res);
+            closeStatement(requete);
+            closeConnection(connexion);        	
         }
-        super.closeResultSet(res);
-        super.closeStatement(requete);
-        super.closeConnection(connexion);
-        
         return -1;
     }
         
