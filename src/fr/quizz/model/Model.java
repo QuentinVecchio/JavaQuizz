@@ -25,37 +25,40 @@ public class Model {
 	
 	final private static String BDD_DRIVER = "com.mysql.jdbc.Driver";
 	
-	private String BDD_URL;
+	private static String BDD_URL;
 	
-	private String BDD_USER;
+	private static String BDD_USER;
 	
-	private String BDD_PASSWORD;
+	private static String BDD_PASSWORD;
+
+	private static Connection connection = null;
 	
-	public Model(){
-		BDD_URL = BDD_IUT[0];
-		BDD_USER = BDD_IUT[1];
-		BDD_PASSWORD = BDD_IUT[2];
+	protected Model(){
+		BDD_URL = BDD_QUENTIN[0];
+		BDD_USER = BDD_QUENTIN[1];
+		BDD_PASSWORD = BDD_QUENTIN[2];
 	}
 	
-	public Connection getConnection(){
-		Connection connection = null;
-		
-		try {
-			Class.forName(BDD_DRIVER);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+	public static Connection getConnection(){
+		if (connection!=null) {
+			try {
+				Class.forName(BDD_DRIVER);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				connection = DriverManager.getConnection(BDD_URL, BDD_USER, BDD_PASSWORD);
+			} catch (SQLException e) {
+				closeConnection(connection);
+				e.printStackTrace();
+			}
 		}
 		
-		try {
-			connection = DriverManager.getConnection(BDD_URL, BDD_USER, BDD_PASSWORD);
-		} catch (SQLException e) {
-			closeConnection(connection);
-			e.printStackTrace();
-		}
 		return connection;
 	}
 	
-	public void closeResultSet(ResultSet res){
+	public static void closeResultSet(ResultSet res){
 		if(res != null){
 			try {
 				res.close();
@@ -65,7 +68,7 @@ public class Model {
 		}
 	}
 	
-	public void closeStatement(Statement s){
+	public static void closeStatement(Statement s){
 		if(s != null){
 			try {
 				s.close();
@@ -76,7 +79,7 @@ public class Model {
 		
 	}
 	
-	public void closeConnection(Connection c){
+	public static void closeConnection(Connection c){
 		if(c != null){
 			try {
 				c.close();
@@ -85,4 +88,35 @@ public class Model {
 			}
 		}
 	}
+	
+	public static void rollback(Connection c){
+		if(c!= null){
+			try {
+			if(!c.isClosed()){
+				if(!c.getAutoCommit()){
+					System.out.println("Je rollback");
+					c.rollback();
+				}
+			}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void commit(Connection c){
+		if(c!= null){
+			try {
+			if(!c.isClosed()){
+				if(!c.getAutoCommit()){
+					c.commit();
+					System.out.println("Je ferme");
+				}
+			}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }
