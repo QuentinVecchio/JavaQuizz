@@ -23,7 +23,7 @@ public class PlayerModel extends Model {
 	 */
 	public Player exist(String name, String password)
 	{
-		Connection connexion = super.getConnection();
+		Connection connexion = getConnection();
 		ResultSet res = null;
 		String sql = "SELECT * FROM joueur WHERE nom_joueur=? AND passwd_joueur=?";
 		Player player = null;
@@ -42,10 +42,11 @@ public class PlayerModel extends Model {
 		catch(SQLException e)
 		{
 			System.err.println("Problème avec la requête exist : " + sql + " " + e);
+		}finally{
+			closeResultSet(res);
+			closeStatement(requete);
+			closeConnection(connexion);
 		}
-		super.closeResultSet(res);
-		super.closeStatement(requete);
-		super.closeConnection(connexion);
 		return player;
 	}
 
