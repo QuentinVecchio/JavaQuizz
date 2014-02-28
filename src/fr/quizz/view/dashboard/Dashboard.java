@@ -20,10 +20,9 @@ public class Dashboard extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private DashboardController controller;
 	private JPanel panelButton = new JPanel();
-	private JPanel panelMain = new JPanel();
-	private JButton btnAddGamer = new JButton("Nouveau joueur");
-	private JButton btnEditGamer = new JButton("Modification joueur");
-	private JButton btnDelGamer = new JButton("Suppression joueur");
+	private JButton btnAddPlayer = new JButton("Nouveau joueur");
+	private JButton btnEditPlayer = new JButton("Modification joueur");
+	private JButton btnDelPlayer = new JButton("Suppression joueur");
 	private JButton btnAddQuestion = new JButton("Nouvelle Question");
 	private JButton btnEditQuestion = new JButton("Modification Question");
 	private JButton btnDelQuestion = new JButton("Suppression Question");
@@ -45,9 +44,8 @@ public class Dashboard extends JFrame{
 	    this.setLocationRelativeTo(null);
 	    //Définition des éléments internes de la fenetre
 	    this.getContentPane().add(panelButton, BorderLayout.WEST);
-	    this.getContentPane().add(panelMain, BorderLayout.CENTER);
 	    //Appel constructeur Panel
-	    this.PanelButtonConstructor();
+	    this.panelButtonConstructor();
 	}
 	
 	public void showFrame(){
@@ -56,45 +54,45 @@ public class Dashboard extends JFrame{
 	
 	public void setViewCenter(JPanel newView)
 	{
-		panelMain.removeAll();
-		panelMain.add(newView);
+		this.getContentPane().add(newView, BorderLayout.CENTER);
+		this.validate();
 	}
 	
-	private void PanelButtonConstructor()
+	private void panelButtonConstructor()
 	{
 		panelButton.setLayout(new GridLayout(10,1));
 		//Affichage du nom
 			JLabel hello = new JLabel(" Bonjour " + this.p.getName(),SwingConstants.CENTER);
 			panelButton.add(hello);
 		//Construction Panel Admin
-			this.PanelAdmin();
+			this.panelAdmin();
 		//Construction Panel Gamer
-			this.PanelGamer();
+			this.panelPlayer();
 	}
 	
-	private void PanelAdmin()
+	private void panelAdmin()
 	{
 		//Construction bouton add Gamer
-			panelButton.add(btnAddGamer);
-			btnAddGamer.addActionListener(new ActionAddGamer());
+			panelButton.add(btnAddPlayer);
+			btnAddPlayer.addActionListener(new ActionAddGamer());
 		//Construction bouton edit Gamer
-			panelButton.add(btnEditGamer);
-			btnAddGamer.addActionListener(new ActionEditGamer());
+			panelButton.add(btnEditPlayer);
+			btnAddPlayer.addActionListener(new ActionEditGamer());
 		//Construction bouton delete Gamer
-			panelButton.add(btnDelGamer);
-			btnAddGamer.addActionListener(new ActionDelGamer());
+			panelButton.add(btnDelPlayer);
+			btnAddPlayer.addActionListener(new ActionDelGamer());
 		//Construction bouton add Question
 			panelButton.add(btnAddQuestion);
-			btnAddGamer.addActionListener(new ActionAddQuestion());
+			btnAddPlayer.addActionListener(new ActionAddQuestion());
 		//Construction bouton edit Question
 			panelButton.add(btnEditQuestion);
-			btnAddGamer.addActionListener(new ActionEditQuestion());
+			btnAddPlayer.addActionListener(new ActionEditQuestion());
 		//Construction bouton delete Question
 			panelButton.add(btnDelQuestion);
-			btnAddGamer.addActionListener(new ActionDelQuestion());
+			btnAddPlayer.addActionListener(new ActionDelQuestion());
 	}
 	
-	private void PanelGamer()
+	private void panelPlayer()
 	{
 		//Construction bouton Quizz
 			panelButton.add(btnQuizz);
@@ -109,6 +107,7 @@ public class Dashboard extends JFrame{
 	
 	class ActionAddGamer implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			setViewCenter(controller.showAddPlayerPanel());
 		}
 	}
 	

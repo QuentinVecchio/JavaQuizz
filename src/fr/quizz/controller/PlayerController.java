@@ -22,4 +22,8 @@ public class PlayerController extends Controller {
 		return model.exist(login, password);
 	}
 
+	public boolean addPlayer(Player p)
+	{
+		return true;
+	}
 }

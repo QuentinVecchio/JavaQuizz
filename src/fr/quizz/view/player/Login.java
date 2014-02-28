@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import fr.quizz.controller.DashboardController;
@@ -24,7 +25,7 @@ public class Login extends JDialog {
 
 	private JTextField m_login = new JTextField();
 
-	private JTextField m_password = new JTextField();
+	private JPasswordField m_password = new JPasswordField();
 	
 	private JButton m_logButton = new JButton("Connexion");
 	
