@@ -70,7 +70,7 @@ public class Login extends JDialog {
 			if(login.length() > 0 && password.length() > 0){
 				final Player p = controller.playerExists(login, password);
 				if(p == null){
-					JOptionPane.showMessageDialog(null, "Joueur non trouvé dans la base de données");
+					JOptionPane.showMessageDialog(null, "Joueur non trouve dans la base de donnees");
 				}else{
 					QuestionController qC = new QuestionController();
 					setVisible(false);

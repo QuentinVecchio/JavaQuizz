@@ -36,7 +36,7 @@ public class QuestionModel extends Model {
                 }
                 catch(SQLException e)
                 {
-                        System.err.println("Problème avec la requête exist : " + sql + " " + e);
+                        System.err.println("Probleme avec la requete exist : " + sql + " " + e);
                 }
                 super.closeResultSet(res);
                 super.closeStatement(requete);
@@ -62,7 +62,7 @@ public class QuestionModel extends Model {
                 }
                 catch(SQLException e)
                 {
-                        System.err.println("Problème avec la requête exist : " + sql + " " + e);
+                        System.err.println("Probleme avec la requete exist : " + sql + " " + e);
                 }
                 super.closeResultSet(res);
                 super.closeStatement(requete);
