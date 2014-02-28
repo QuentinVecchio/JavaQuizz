@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import fr.quizz.controller.PlayerController;
 import fr.quizz.core.Player;
 
-public class Add extends JPanel {
+public class Edit extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Player p;
@@ -29,48 +29,47 @@ public class Add extends JPanel {
 	private JPanel panelPassword = new JPanel();
 	private JPanel panelButton = new JPanel();
 	
-	public Add() {
+	public Edit(Player p) {
 		super();
-		//Panel Name
-			panelName.add(new JLabel("Login : "));
-			panelName.add(textName);
-			textName.setPreferredSize(new Dimension(200,30));
-		//Panel Mail
-			panelMail.add(new JLabel("Email : "));
-			panelMail.add(textMail);
-			textMail.setPreferredSize(new Dimension(200,30));
-		//Panel Password
-			panelPassword.add(new JLabel("Mot de passe : "));
-			panelPassword.add(textPassword);
-			textPassword.setPreferredSize(new Dimension(200,30));
-		//Panel Button
-			panelButton.add(btnReset);
-			panelButton.add(btnValide);
-			btnReset.addActionListener(new ActionReset());
-			btnValide.addActionListener(new ActionValide());
-		//Panel Main
-			this.setLayout(new GridLayout(4,1));
-			this.add(panelName);
-			this.add(panelMail);
-			this.add(panelPassword);
-			this.add(panelButton);
+	//Affectation de Player
+		this.p = p;
+	//Panel Name
+		panelName.add(new JLabel("Login : "));
+		panelName.add(textName);
+		textName.setPreferredSize(new Dimension(200,30));
+	//Panel Mail
+		panelMail.add(new JLabel("Email : "));
+		panelMail.add(textMail);
+		textMail.setPreferredSize(new Dimension(200,30));
+	//Panel Password
+		panelPassword.add(new JLabel("Mot de passe : "));
+		panelPassword.add(textPassword);
+		textPassword.setPreferredSize(new Dimension(200,30));
+	//Panel Button
+		panelButton.add(btnReset);
+		panelButton.add(btnValide);
+		btnReset.addActionListener(new ActionReset());
+		btnValide.addActionListener(new ActionValide());
+	//Panel Main
+		this.setLayout(new GridLayout(4,1));
+		this.add(panelName);
+		this.add(panelMail);
+		this.add(panelPassword);
+		this.add(panelButton);
 	}
 	
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			PlayerController pC = new PlayerController();
 			p = new Player(-1, textName.toString(), textPassword.toString(), textMail.toString());
-			if(pC.addPlayer(p))
+			if(pC.editPlayer(p))
 			{
-				JOptionPane.showMessageDialog(null, "L'utilisateur a été créé", "Information", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "L'utilisateur a été mis à jour", "Information", JOptionPane.INFORMATION_MESSAGE);
 				setVisible(false);
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, "L'utilisateur n'a pas été créé", "Erreur", JOptionPane.ERROR_MESSAGE);
-				textName.setText("");
-				textMail.setText("");
-				textPassword.setText("");
+				JOptionPane.showMessageDialog(null, "L'utilisateur n'a pas été mis à jour", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

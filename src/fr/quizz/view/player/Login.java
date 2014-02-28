@@ -75,19 +75,20 @@ public class Login extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			final String login = m_login.getText();
 			final String password = m_password.getText();
+			System.out.println(password);
 			if(login.length() > 0 && password.length() > 0){
 				Player p = null;
 				try {
 					p = controller.playerExists(login, password);
 					if(p == null){
-						JOptionPane.showMessageDialog(null, "Joueur non trouve dans la base de donnees");
+						JOptionPane.showMessageDialog(null, "Joueur non trouve dans la base de données");
 					}else{
 						DashboardController dC = new DashboardController();
 						setVisible(false);
 						dC.dashboard(p);
 					}	
 				} catch (DatabaseConnexionException e1) {
-					JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuee !");
+					JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
 					e1.printStackTrace();
 				}
 						

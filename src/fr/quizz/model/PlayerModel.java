@@ -50,7 +50,7 @@ public class PlayerModel extends Model {
 		}
 		catch(SQLException e)
 		{
-			System.err.println("Problème avec la requête exist : " + sql);
+			System.err.println("Problème avec la requète exist : " + sql);
 			e.printStackTrace();
 		}finally{
 			closeResultSet(res);
