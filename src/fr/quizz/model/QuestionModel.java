@@ -8,14 +8,16 @@ import java.util.ArrayList;
 
 import fr.quizz.core.Question;
 import fr.quizz.exception.DatabaseConnexionException;
+import fr.quizz.exception.DeleteMultipleException;
+import fr.quizz.exception.QuestionNotSaveException;
 	/**
-	 * 	 This class allow to manage the ques table of the database
+	 * 	 This class allow to manage the question table of the database
 	 * @author Matthieu CLIN, Quentin VECCHIO
 	 */
 public class QuestionModel extends Model {
 
 	public QuestionModel() {
-        super("question");
+        super("question", "code_question");
     }
 
     /**
@@ -95,8 +97,9 @@ public class QuestionModel extends Model {
      * @param question, the question to save
      * @return the new id of the question or -1 otherwise
      * @throws DatabaseConnexionException 
+     * @throws QuestionNotSaveException 
      */
-    public int saveQuestion(Question question) throws DatabaseConnexionException{
+    public int saveQuestion(Question question) throws DatabaseConnexionException, QuestionNotSaveException{
 
     	if(question.getCode() != -1) return -1;
     	
@@ -115,7 +118,7 @@ public class QuestionModel extends Model {
             if(res.next()){
             	return res.getInt(1);
             }else{
-            	//throw new BDDQuestionException();
+            	throw new QuestionNotSaveException("Impossible d'enregistrer la question");
             }
         }
         catch(SQLException e)
@@ -128,5 +131,15 @@ public class QuestionModel extends Model {
         }
         return -1;
     }
-        
+
+    /**
+     * Call the function delete from the superclass (only for convenient)
+     * @param question
+     * @throws DatabaseConnexionException
+     * @throws DeleteMultipleException
+     */
+    public void deleteQuestion(Question question) throws DatabaseConnexionException, DeleteMultipleException{
+    	super.delete(question.getCode());
+    }
+    
 }

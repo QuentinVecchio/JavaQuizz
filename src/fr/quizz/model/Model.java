@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import fr.quizz.exception.DatabaseConnexionException;
+import fr.quizz.exception.DeleteMultipleException;
 	/**
 	 * 	 
 	 * @author Matthieu CLIN, Quentin VECCHIO
@@ -41,12 +42,15 @@ public class Model {
 	
 	private String tableName;
 	
+	private String tableId;
+	
 	/**
 	 * 
 	 * @param tableName the name of the table in the database
 	 */
-	protected Model(String tableName){
+	protected Model(String tableName, String tableId){
 		this.tableName = tableName;
+		this.tableId = tableId;
 		BDD_URL = BDD_IUT[0];
 		BDD_USER = BDD_IUT[1];
 		BDD_PASSWORD = BDD_IUT[2];
@@ -75,7 +79,8 @@ public class Model {
         }
         catch(SQLException e)
         {
-                System.err.println("Probleme avec la requete : " + sql + " " + e);
+                System.err.println("Probleme avec la requete : " + sql);
+                e.printStackTrace();
         }finally{
             closeResultSet(res);
             closeStatement(requete);
@@ -84,6 +89,45 @@ public class Model {
 
         return -1;
     }
+	
+    /**
+     * Function which allows to save a Question in database
+     * @param question, the question to save
+     * @throws DatabaseConnexionException 
+     * @throws DeleteMultipleException 
+     */
+    public void delete(int id) throws DatabaseConnexionException, DeleteMultipleException{
+
+    	if(id == -1) return;
+    	
+    	Connection connexion = getConnection();
+        
+        PreparedStatement requete = null;
+        try
+        {
+    		String sql = "DELETE FROM "+this.tableName+" WHERE "+tableId+" = ? ";
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
+            requete.setInt(1, id);
+            
+            int res = requete.executeUpdate();
+            
+            if(res != 1){
+            	throw new DeleteMultipleException("Erreur lors de la suppression de l'element:"+id);
+            }
+            
+
+        }
+        catch(SQLException e)
+        {
+            System.err.println("Probleme avec la requête");
+            e.printStackTrace();
+        }finally{
+            closeStatement(requete);
+            closeConnection(connexion);	
+        }
+    }
+	
+	
 	
 	
     /**
@@ -196,5 +240,15 @@ public class Model {
 			}
 		}
 	}
+
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+	
+	
 	
 }

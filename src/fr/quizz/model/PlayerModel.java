@@ -7,6 +7,9 @@ import java.sql.SQLException;
 
 import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
+import fr.quizz.exception.DeleteMultipleException;
+import fr.quizz.exception.PlayerNotSaveException;
+
 	/**
 	 * 	 This class allow to manage the player table of the database
 	 * @author Matthieu CLIN, Quentin VECCHIO
@@ -14,7 +17,7 @@ import fr.quizz.exception.DatabaseConnexionException;
 public class PlayerModel extends Model {
 
 	public PlayerModel() {
-		super("player");
+		super("player","code_joueur");
 		
 	}
 
@@ -60,38 +63,53 @@ public class PlayerModel extends Model {
      * Function which allows to save a Question in database
      * @param question, the question to save
      * @throws DatabaseConnexionException 
+     * @throws DeleteMultipleException 
      */
-    public void deletePlayer(Player player) throws DatabaseConnexionException{
+    public void deletePlayer(Player player) throws DatabaseConnexionException, DeleteMultipleException{
 
-    	if(player.getCode() == -1) return;
+    	super.delete(player.getCode());
+    }
+
+    /**
+     * This function saves a player in the database
+     * @param player the player to save
+     * @return the id of the player in the database
+     * @throws DatabaseConnexionException if connection is lost
+     * @throws PlayerNotSaveException if insert fails
+     */
+    public int savePlayer(Player player) throws DatabaseConnexionException, PlayerNotSaveException{
+
+    	if(player.getCode() != -1) return -1;
     	
     	Connection connexion = getConnection();
-        
+        String sql = "INSERT INTO "+this.getTableName()+" (nom_joueur,mail_joueur, pass_joueur) VALUES (?,?,?)";
         PreparedStatement requete = null;
+        ResultSet res = null;
+        
         try
         {
-    		connexion.setAutoCommit(false);
-    		String sql = "DELETE FROM joueur WHERE code_joueur = ? ";
-            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
-            requete.setInt(1, player.getCode());
-            
-            int res = requete.executeUpdate();
-            System.out.println("res 1er:"+res);
-    		sql = "DELETE FROM quizz WHERE code_joueur = ? ";
-            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
-            requete.setInt(1, player.getCode());
-            res = requete.executeUpdate();
-            System.out.println("res 2e:"+res);
-            commit(connexion);
+            requete  = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            requete.setString(1,player.getName());
+            requete.setString(2,player.getPassword());
+            requete.setString(3,player.getMail());
+
+            res = requete.getGeneratedKeys();
+            if(res.next()){
+            	return res.getInt(1);
+            }else{
+            	throw new PlayerNotSaveException("Impossible d'enregistrer l'utilisateur");
+            }
         }
         catch(SQLException e)
         {
-    		rollback(connexion);
-            System.err.println("Probleme avec lors de la transaction" + e);
+        	System.err.println("Probleme avec la requete : " + sql + " " + e);
         }finally{
+            closeResultSet(res);
             closeStatement(requete);
-            closeConnection(connexion);	
+            closeConnection(connexion);        	
         }
+        return -1;
     }
-
+    
+    
 }
