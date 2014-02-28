@@ -32,9 +32,9 @@ public class Model {
 	private String BDD_PASSWORD;
 	
 	public Model(){
-		BDD_URL = BDD_QUENTIN[0];
-		BDD_USER = BDD_QUENTIN[1];
-		BDD_PASSWORD = BDD_QUENTIN[2];
+		BDD_URL = BDD_IUT[0];
+		BDD_USER = BDD_IUT[1];
+		BDD_PASSWORD = BDD_IUT[2];
 	}
 	
 	public Connection getConnection(){
@@ -47,9 +47,6 @@ public class Model {
 		}
 		
 		try {
-			System.out.println(BDD_URL);
-			System.out.println(BDD_USER);
-			System.out.println(BDD_PASSWORD);
 			connection = DriverManager.getConnection(BDD_URL, BDD_USER, BDD_PASSWORD);
 		} catch (SQLException e) {
 			closeConnection(connection);
