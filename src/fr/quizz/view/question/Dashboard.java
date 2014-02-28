@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import fr.quizz.controller.QuestionController;
 import fr.quizz.core.Player;
@@ -24,7 +23,7 @@ public class Dashboard extends JFrame{
 	public Dashboard(QuestionController qC,Player p){
 		this.player = p;
 		this.controller = qC;
-		initMenu();
+		setMenuBar(initMenu());
 		initComponents();
 
 	}
@@ -40,18 +39,19 @@ public class Dashboard extends JFrame{
 
 	}
 	
-	public void initMenu(){
+	public MenuBar initMenu(){
 		MenuBar menu = new MenuBar();
 		
 		Menu m_fichier = new Menu("Fichier");
 			MenuItem fichier_quitter = new MenuItem("Quitter");
 			m_fichier.add(fichier_quitter);
+		menu.add(m_fichier);
 		Menu m_question = new Menu("Question");
 			MenuItem question_ajouter = new MenuItem("Ajouter");
 			question_ajouter.addActionListener(new ActionAddQuestion());
 			m_question.add(question_ajouter);
-			
-		setMenuBar(menu);
+		menu.add(m_question);	
+		return menu;
 	}
 	
 	
