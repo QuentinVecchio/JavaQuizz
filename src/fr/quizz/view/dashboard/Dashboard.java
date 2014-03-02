@@ -8,11 +8,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import fr.quizz.controller.DashboardController;
 import fr.quizz.core.Player;
+import fr.quizz.exception.DatabaseConnexionException;
 
 public class Dashboard extends JFrame{
 
@@ -105,6 +107,11 @@ public class Dashboard extends JFrame{
 	
 	class ActionManagePlayer implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			try {
+				setViewCenter(controller.showManagerPlayerPanel());
+			} catch (DatabaseConnexionException e1) {
+				JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
+			}
 		}
 	}
 	

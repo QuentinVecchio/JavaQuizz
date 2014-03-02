@@ -18,7 +18,7 @@ import fr.quizz.exception.PlayerNotSaveException;
 public class PlayerModel extends Model {
 
 	public PlayerModel() {
-		super("player","code_joueur");
+		super("joueur","code_joueur");
 		
 	}
 
@@ -110,12 +110,10 @@ public class PlayerModel extends Model {
     }
     
     /**
-     * Get all the questions where the pattern "pattern" is matched
-     * @param pattern the pattern that must be respect by the question 
-     * @return a ArrayList which contains all the Question 
+     * @return a ArrayList which contains all the Player 
      * @throws DatabaseConnexionException 
      */
-    public ArrayList<Player> getAllQuestion() throws DatabaseConnexionException{
+    public ArrayList<Player> getAllPlayer() throws DatabaseConnexionException{
     	ArrayList<Player> list = new ArrayList<Player>();
     	
     	Connection connexion = super.getConnection();
@@ -127,7 +125,7 @@ public class PlayerModel extends Model {
             res = requete.executeQuery();
             
             while(res.next()){
-                    list.add(new Player(res.getInt("code_joueur"),res.getString("nom_joueur"),res.getString("mail_joueur"),res.getString("passwd_joueur")));
+                    list.add(new Player(res.getInt("code_joueur"),res.getString("nom_joueur"),res.getString("passwd_joueur"),res.getString("mail_joueur")));
             }
             return list;
             
