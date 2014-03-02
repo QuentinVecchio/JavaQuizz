@@ -51,9 +51,9 @@ public class Model {
 	protected Model(String tableName, String tableId){
 		this.tableName = tableName;
 		this.tableId = tableId;
-		BDD_URL = BDD_IUT[0];
-		BDD_USER = BDD_IUT[1];
-		BDD_PASSWORD = BDD_IUT[2];
+		BDD_URL = BDD_MATTHIEU[0];
+		BDD_USER = BDD_MATTHIEU[1];
+		BDD_PASSWORD = BDD_MATTHIEU[2];
 	}
 	
     /**
@@ -136,21 +136,20 @@ public class Model {
      * @throws DatabaseConnexionException 
      */
 	public static Connection getConnection() throws DatabaseConnexionException{
-		if (connection == null) {
-			try {
+		try {
+			if (connection == null || connection.isClosed()) {
+
 				Class.forName(BDD_DRIVER);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				throw new DatabaseConnexionException("Erreur de connexion à la base de donnée");
-			}
-			
-			try {
 				connection = DriverManager.getConnection(BDD_URL, BDD_USER, BDD_PASSWORD);
-			} catch (SQLException e) {
-				closeConnection(connection);
-				e.printStackTrace();
-				throw new DatabaseConnexionException("Erreur de connexion à la base de donnée");
 			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			throw new DatabaseConnexionException("Erreur de connexion à la base de donnée");
+			
+		}catch (SQLException e) {
+			closeConnection(connection);
+			e.printStackTrace();
+			throw new DatabaseConnexionException("Erreur de connexion à la base de donnée");
 		}
 		
 		return connection;
