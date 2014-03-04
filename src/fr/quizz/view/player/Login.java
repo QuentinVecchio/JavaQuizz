@@ -39,7 +39,7 @@ public class Login extends JDialog {
 	public void initComponents(){
 		setTitle("Connexion");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(new Dimension(300,200));
+		setSize(new Dimension(250,290));
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 		JPanel panelLogin = new JPanel();
@@ -57,8 +57,8 @@ public class Login extends JDialog {
 		panelMDP.add(new JLabel("Mot de passe:"));
 		panelMDP.add(m_password);
 		
-		m_login.setPreferredSize(new Dimension(100,30));
-		m_password.setPreferredSize(new Dimension(100,30));
+		m_login.setPreferredSize(new Dimension(200,30));
+		m_password.setPreferredSize(new Dimension(200,30));
 		
 		add(panelMain, BorderLayout.CENTER);
 		m_logButton.addActionListener(new ActionLogin());
@@ -75,7 +75,6 @@ public class Login extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			final String login = m_login.getText();
 			final String password = m_password.getText();
-			System.out.println(password);
 			if(login.length() > 0 && password.length() > 0){
 				Player p = null;
 				try {

@@ -72,9 +72,6 @@ public class Dashboard extends JFrame{
 	
 	private void panelAdmin()
 	{
-		//Construction bouton add Gamer
-			panelButton.add(btnAddPlayer);
-			btnAddPlayer.addActionListener(new ActionAddGamer());
 		//Construction bouton manage Gamer
 			panelButton.add(btnManagePlayer);
 			btnManagePlayer.addActionListener(new ActionManagePlayer());
@@ -97,12 +94,6 @@ public class Dashboard extends JFrame{
 		//Construction bouton Quitter
 			panelButton.add(btnQuit);
 			btnQuit.addActionListener(new ActionQuit());
-	}
-	
-	class ActionAddGamer implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			setViewCenter(controller.showAddPlayerPanel());
-		}
 	}
 	
 	class ActionManagePlayer implements ActionListener{
