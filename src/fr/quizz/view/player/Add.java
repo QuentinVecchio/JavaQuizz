@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -14,11 +15,13 @@ import javax.swing.JTextField;
 
 import fr.quizz.controller.PlayerController;
 import fr.quizz.core.Player;
+import fr.quizz.exception.DatabaseConnexionException;
+import fr.quizz.exception.PlayerNotSaveException;
 
-public class Add extends JPanel {
+public class Add extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private Player p;
+	private Player player;
 	private JButton btnValide = new JButton("Valider");
 	private JButton btnReset = new JButton("RAZ");
 	private JTextField textName = new JTextField();
@@ -31,6 +34,10 @@ public class Add extends JPanel {
 	
 	public Add() {
 		super();
+		setTitle("Ajout d'un joueur");
+		setSize(new Dimension(250,290));
+		setLocationRelativeTo(null);
+		setModal(true);
 		//Panel Name
 			panelName.add(new JLabel("Login : "));
 			panelName.add(textName);
@@ -56,21 +63,31 @@ public class Add extends JPanel {
 			this.add(panelButton);
 	}
 	
+	public Player showJDialog(){
+		setVisible(true);
+		return player;
+	}
+	
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			PlayerController pC = new PlayerController();
-			p = new Player(-1, textName.toString(), textPassword.toString(), textMail.toString());
-			if(pC.addPlayer(p))
-			{
+			player = new Player(-1, textName.getText(), textPassword.getText(), textMail.getText());
+			
+			try {
+				player.setCode(pC.addPlayer(player));
+			} catch (DatabaseConnexionException e1) {
+				JOptionPane.showMessageDialog(null, "Impossible de se connecter à la base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
+			} catch (PlayerNotSaveException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Impossible d'ajouter le joueur en base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			if(player.getCode() > -1){
 				JOptionPane.showMessageDialog(null, "L'utilisateur a été créé", "Information", JOptionPane.INFORMATION_MESSAGE);
 				setVisible(false);
-			}
-			else
-			{
+				
+			}else{
 				JOptionPane.showMessageDialog(null, "L'utilisateur n'a pas été créé", "Erreur", JOptionPane.ERROR_MESSAGE);
-				textName.setText("");
-				textMail.setText("");
-				textPassword.setText("");
 			}
 		}
 	}

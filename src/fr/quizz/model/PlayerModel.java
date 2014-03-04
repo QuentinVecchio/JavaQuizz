@@ -78,19 +78,20 @@ public class PlayerModel extends Model {
      * @throws PlayerNotSaveException if insert fails
      */
     public int savePlayer(Player player) throws DatabaseConnexionException, PlayerNotSaveException{
-
     	if(player.getCode() != -1) return -1;
     	
     	Connection connexion = getConnection();
-        String sql = "INSERT INTO "+this.getTableName()+" (nom_joueur,mail_joueur, pass_joueur) VALUES (?,?,?)";
+        String sql = "INSERT INTO "+this.getTableName()+" (nom_joueur,mail_joueur, passwd_joueur) VALUES (?,?,?)";
         PreparedStatement requete = null;
         ResultSet res = null;
         
         try{
             requete  = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             requete.setString(1,player.getName());
-            requete.setString(2,player.getPassword());
-            requete.setString(3,player.getMail());
+            requete.setString(2,player.getMail());
+            requete.setString(3,player.getPassword());
+
+            requete.executeUpdate();
 
             res = requete.getGeneratedKeys();
             if(res.next()){

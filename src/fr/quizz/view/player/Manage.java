@@ -22,10 +22,14 @@ public class Manage extends JPanel{
 	
 	private JTable playerTable;
 	
+	private ManageTable manageTable;
+	
 	public Manage(ArrayList<Player> playerList) {
 		super();
 		this.setPlayerList(playerList);
+		manageTable = new ManageTable(playerList);
 		initComponent();
+
 	}
 	
 	public void initComponent(){
@@ -33,7 +37,7 @@ public class Manage extends JPanel{
 		btnAdd.addActionListener(new ActionAdd());
 		add(btnAdd, BorderLayout.SOUTH);
 		
-		playerTable = new JTable(new ManageTable(playerList));
+		playerTable = new JTable(manageTable);
 		add(new JScrollPane(playerTable), BorderLayout.NORTH);
 		
 		setVisible(true);
@@ -49,7 +53,11 @@ public class Manage extends JPanel{
 
 	class ActionAdd implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Bouton ajouter");
+			final Add add = new Add();
+			final Player p = add.showJDialog();
+			if(p != null){
+				manageTable.addPlayer(p);
+			}
 		}
 	}
 	
