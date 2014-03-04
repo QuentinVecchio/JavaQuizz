@@ -247,6 +247,14 @@ public class Model {
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
+
+	public String getTableId() {
+		return tableId;
+	}
+
+	public void setTableId(String tableId) {
+		this.tableId = tableId;
+	}
 	
 	
 	

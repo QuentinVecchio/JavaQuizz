@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,10 +16,10 @@ import javax.swing.JTextField;
 import fr.quizz.controller.PlayerController;
 import fr.quizz.core.Player;
 
-public class Edit extends JPanel {
+public class Edit extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private Player p;
+	private Player player;
 	private JButton btnValide = new JButton("Valider");
 	private JButton btnReset = new JButton("RAZ");
 	private JTextField textName = new JTextField();
@@ -28,21 +29,31 @@ public class Edit extends JPanel {
 	private JPanel panelMail = new JPanel();
 	private JPanel panelPassword = new JPanel();
 	private JPanel panelButton = new JPanel();
+	private PlayerController controller = new PlayerController();
+	
 	
 	public Edit(Player p) {
 		super();
+		setTitle("Edition d'un joueur");
+		setSize(new Dimension(250,290));
+		setLocationRelativeTo(null);
+		setModal(true);
+		
 	//Affectation de Player
-		this.p = p;
+		this.player = p;
 	//Panel Name
 		panelName.add(new JLabel("Login : "));
+		textName.setText(p.getName());
 		panelName.add(textName);
 		textName.setPreferredSize(new Dimension(200,30));
 	//Panel Mail
 		panelMail.add(new JLabel("Email : "));
+		textMail.setText(p.getMail());
 		panelMail.add(textMail);
 		textMail.setPreferredSize(new Dimension(200,30));
 	//Panel Password
 		panelPassword.add(new JLabel("Mot de passe : "));
+		textPassword.setText(p.getPassword());
 		panelPassword.add(textPassword);
 		textPassword.setPreferredSize(new Dimension(200,30));
 	//Panel Button
@@ -58,19 +69,16 @@ public class Edit extends JPanel {
 		this.add(panelButton);
 	}
 	
+	public Player showJDialog(){
+		setVisible(true);
+		return player;
+	}
+	
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			PlayerController pC = new PlayerController();
-			p = new Player(-1, textName.toString(), textPassword.toString(), textMail.toString());
-			if(pC.editPlayer(p))
-			{
-				JOptionPane.showMessageDialog(null, "L'utilisateur a été mis à jour", "Information", JOptionPane.INFORMATION_MESSAGE);
-				setVisible(false);
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "L'utilisateur n'a pas été mis à jour", "Erreur", JOptionPane.ERROR_MESSAGE);
-			}
+			
+			player = new Player(player.getCode(), textName.getText(), textPassword.getText(), textMail.getText());
+			setVisible(false);
 		}
 	}
 	
