@@ -92,6 +92,41 @@ public class QuestionModel extends Model {
         }
         return list;
     }
+    
+    /**
+     * 
+     * @return all questions in the database
+     * @throws DatabaseConnexionException
+     */
+    public ArrayList<Question> getAllQuestion() throws DatabaseConnexionException{
+    	ArrayList<Question> list = new ArrayList<Question>();
+    	
+    	Connection connexion = super.getConnection();
+        ResultSet res = null;
+        String sql = "SELECT * FROM "+this.getTableName();
+        PreparedStatement requete = null;
+        try
+        {
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            res = requete.executeQuery();
+            while(res.next())
+            {
+                list.add(new Question(res.getInt("code_question"),res.getString("texte_question"),res.getString("reponse_joueur")));
+            }
+            return list;
+        }
+        catch(SQLException e)
+        {
+            System.err.println("Probleme avec la requete getAllQuestion : " + sql);
+            e.printStackTrace();
+        }finally{
+        	closeResultSet(res);
+            closeStatement(requete);
+            closeConnection(connexion);	
+        }
+        return list;
+    }    
+    
 
     /**
      * Function which allows to save a Question in database
