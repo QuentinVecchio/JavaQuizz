@@ -12,7 +12,7 @@ import javax.swing.JTable;
 
 import fr.quizz.core.Player;
 
-public class Manage extends JPanel{
+public class ManagePlayer extends JPanel{
 
 	private static final long serialVersionUID = -6880840401682350191L;
 
@@ -24,7 +24,7 @@ public class Manage extends JPanel{
 	
 	private ManageTable manageTable;
 	
-	public Manage(ArrayList<Player> playerList) {
+	public ManagePlayer(ArrayList<Player> playerList) {
 		super();
 		this.setPlayerList(playerList);
 		manageTable = new ManageTable(playerList);
@@ -34,7 +34,7 @@ public class Manage extends JPanel{
 	
 	public void initComponent(){
 		setLayout(new BorderLayout());
-		btnAdd.addActionListener(new ActionAdd());
+		btnAdd.addActionListener(new ActionAddPlayer());
 		add(btnAdd, BorderLayout.SOUTH);
 		
 		playerTable = new JTable(manageTable);
@@ -51,7 +51,7 @@ public class Manage extends JPanel{
 		this.playerList = playerList;
 	}
 
-	class ActionAdd implements ActionListener{
+	class ActionAddPlayer implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			final Add add = new Add();
 			final Player p = add.showJDialog();

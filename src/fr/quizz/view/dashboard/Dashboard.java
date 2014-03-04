@@ -22,9 +22,7 @@ public class Dashboard extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private DashboardController controller;
 	private JPanel panelButton = new JPanel();
-	private JButton btnAddPlayer = new JButton("Nouveau joueur");
 	private JButton btnManagePlayer = new JButton("Gestion Joueurs");
-	private JButton btnAddQuestion = new JButton("Nouvelle Question");
 	private JButton btnManageQuestion = new JButton("Gestion Questions");
 	private JButton btnQuizz = new JButton("Quizz");
 	private JButton btnUser = new JButton("Profil");
@@ -75,12 +73,9 @@ public class Dashboard extends JFrame{
 		//Construction bouton manage Gamer
 			panelButton.add(btnManagePlayer);
 			btnManagePlayer.addActionListener(new ActionManagePlayer());
-		//Construction bouton add Question
-			panelButton.add(btnAddQuestion);
-			btnAddPlayer.addActionListener(new ActionAddQuestion());
 		//Construction bouton edit Question
 			panelButton.add(btnManageQuestion);
-			btnAddPlayer.addActionListener(new ActionManageQuestion());
+			btnManageQuestion.addActionListener(new ActionManageQuestion());
 	}
 	
 	private void panelPlayer()
@@ -113,6 +108,11 @@ public class Dashboard extends JFrame{
 	
 	class ActionManageQuestion implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			try {
+				setViewCenter(controller.showManagerQuestionPanel());
+			} catch (DatabaseConnexionException e1) {
+				JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
+			}
 		}
 	}
 	
