@@ -10,6 +10,7 @@ import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.PlayerNotSaveException;
+import fr.quizz.exception.UpdatePlayerException;
 
 	/**
 	 * 	 This class allow to manage the player table of the database
@@ -101,7 +102,8 @@ public class PlayerModel extends Model {
             }
             
         }catch(SQLException e){
-        	System.err.println("Probleme avec la requete : " + sql + " " + e);
+        	e.printStackTrace();
+        	System.err.println("Probleme avec la requete : " + sql);
         }finally{
             closeResultSet(res);
             closeStatement(requete);
@@ -109,6 +111,36 @@ public class PlayerModel extends Model {
         }
         return -1;
     }
+    
+    public void updatePlayer(Player player) throws DatabaseConnexionException, UpdatePlayerException{
+    	if(player.getCode() == -1) return;
+    	Connection connexion = getConnection();
+        String sql = "UPDATE "+this.getTableName()+" SET nom_joueur = ?, mail_joueur=?, passwd_joueur=? WHERE "+this.getTableId()+"= ?";
+        PreparedStatement requete = null;
+        
+        try{
+            requete  = connexion.prepareStatement(sql);
+            requete.setString(1,player.getName());
+            requete.setString(2,player.getMail());
+            requete.setString(3,player.getPassword());
+            requete.setInt(4,player.getCode());
+            
+            final int res = requete.executeUpdate();
+            if(res != 1){
+            	throw new UpdatePlayerException("Il y a "+res+" ligne(s) modifiée(s)");
+            }
+      
+        }catch(SQLException e){
+        	e.printStackTrace();
+        	System.err.println("Probleme avec la requete : " + sql);
+        }finally{
+            closeStatement(requete);
+            closeConnection(connexion);        	
+        }
+    }    
+    
+    
+    
     
     /**
      * @return a ArrayList which contains all the Player 

@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import fr.quizz.core.Question;
 
@@ -38,6 +39,7 @@ public class ManageQuestion extends JPanel{
 		add(btnAddQuestion, BorderLayout.SOUTH);
 		
 		playerTable = new JTable(manageTable);
+		playerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(new JScrollPane(playerTable), BorderLayout.NORTH);
 		
 		setVisible(true);

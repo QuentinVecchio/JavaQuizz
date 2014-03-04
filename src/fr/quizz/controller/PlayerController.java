@@ -2,7 +2,9 @@ package fr.quizz.controller;
 
 import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
+import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.PlayerNotSaveException;
+import fr.quizz.exception.UpdatePlayerException;
 import fr.quizz.model.PlayerModel;
 import fr.quizz.view.player.Login;
 
@@ -23,14 +25,17 @@ public class PlayerController extends Controller {
 		return model.exist(login, password);
 	}
 
-	public int addPlayer(Player p) throws DatabaseConnexionException, PlayerNotSaveException
-	{
+	public int addPlayer(Player p) throws DatabaseConnexionException, PlayerNotSaveException{
 		//TODO ajouter vérification sur les valeurs du player
 		return model.savePlayer(p);
 	}
 	
-	public boolean editPlayer(Player p)
-	{
-		return true;
+	public void editPlayer(Player p) throws DatabaseConnexionException, UpdatePlayerException{
+		//TODO ajouter verif probablement dans la classe elle-même
+		model.updatePlayer(p);
+	}
+	
+	public void deletePlayer(int id) throws DatabaseConnexionException, DeleteMultipleException{
+		model.delete(id);
 	}
 }

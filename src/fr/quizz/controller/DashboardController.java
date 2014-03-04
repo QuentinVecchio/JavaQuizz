@@ -7,7 +7,6 @@ import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.model.PlayerModel;
 import fr.quizz.model.QuestionModel;
 import fr.quizz.view.dashboard.Dashboard;
-import fr.quizz.view.player.Edit;
 import fr.quizz.view.player.ManagePlayer;
 import fr.quizz.view.question.ManageQuestion;
 
@@ -16,12 +15,6 @@ public class DashboardController extends Controller {
 	public void dashboard(Player p){
 		Dashboard d = new Dashboard(this, p);
 		d.showFrame();
-	}
-	
-	public JPanel showEditPlayerPanel(Player p)
-	{
-		Edit panelEditPlayer = new Edit(p);
-		return panelEditPlayer;
 	}
 	
 	public JPanel showManagerPlayerPanel() throws DatabaseConnexionException{

@@ -31,7 +31,7 @@ public class Add extends JDialog {
 	private JPanel panelMail = new JPanel();
 	private JPanel panelPassword = new JPanel();
 	private JPanel panelButton = new JPanel();
-	
+	private PlayerController controller = new PlayerController();
 	public Add() {
 		super();
 		setTitle("Ajout d'un joueur");
@@ -70,11 +70,10 @@ public class Add extends JDialog {
 	
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			PlayerController pC = new PlayerController();
 			player = new Player(-1, textName.getText(), textPassword.getText(), textMail.getText());
 			
 			try {
-				player.setCode(pC.addPlayer(player));
+				player.setCode(controller.addPlayer(player));
 			} catch (DatabaseConnexionException e1) {
 				JOptionPane.showMessageDialog(null, "Impossible de se connecter à la base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
 			} catch (PlayerNotSaveException e1) {

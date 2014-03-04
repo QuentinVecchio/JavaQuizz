@@ -56,8 +56,17 @@ public class ManageTable extends AbstractTableModel {
 	}
 	
 	public void addPlayer(Player p){
-		System.out.println("modif");
 		this.playerList.add(p);
+		fireTableDataChanged();
+	}
+	
+	public void updatePlayer(int id, Player p){
+		this.playerList.set(id, p);
+		fireTableDataChanged();
+	}
+
+	public void removePlayer(int idInTable) {
+		this.playerList.remove(idInTable);
 		fireTableDataChanged();
 	}
 
