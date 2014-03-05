@@ -40,7 +40,7 @@ public class ManageQuestion extends JPanel{
 		
 		playerTable = new JTable(manageTable);
 		playerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		add(new JScrollPane(playerTable), BorderLayout.NORTH);
+		add(new JScrollPane(playerTable), BorderLayout.CENTER);
 		
 		setVisible(true);
 	}
