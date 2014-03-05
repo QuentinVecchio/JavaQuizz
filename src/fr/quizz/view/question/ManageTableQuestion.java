@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import fr.quizz.core.Player;
 import fr.quizz.core.Question;
 
 public class ManageTableQuestion extends AbstractTableModel {
 
 	private static final long serialVersionUID = -5799896863128212772L;
 
-	private String[] entete = {"Question", "Réponse"};
+	private String[] entete = {"Question", "RÃ©ponse"};
 	
 	private ArrayList<Question> questionList = new ArrayList<Question>();
 	
@@ -60,4 +61,13 @@ public class ManageTableQuestion extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
+	public void updateQuestion(int id, Question q){
+		this.questionList.set(id, q);
+		fireTableDataChanged();
+	}
+
+	public void removeQuestion(int idInTable) {
+		this.questionList.remove(idInTable);
+		fireTableDataChanged();
+	}
 }
