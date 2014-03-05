@@ -64,7 +64,7 @@ public class ManagePlayer extends JPanel{
 		
 		playerTable = new JTable(manageTable);
 		playerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		add(new JScrollPane(playerTable), BorderLayout.NORTH);
+		add(new JScrollPane(playerTable), BorderLayout.CENTER);
 		
 		setVisible(true);
 	}
@@ -87,15 +87,15 @@ public class ManagePlayer extends JPanel{
 		public void actionPerformed(ActionEvent arg0) {
 			final int idInTable = playerTable.getSelectedRow();
 			if(idInTable >= 0 && idInTable < playerList.size()){
-				final int answer = JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir supprimer ?", "Titre", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				final int answer = JOptionPane.showConfirmDialog(null, "Etes-vous sÃ»r de vouloir supprimer ?", "Titre", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if(answer == 0){
 					try {
 						controller.deletePlayer(idInTable);
 						manageTable.removePlayer(idInTable);
 					} catch (DatabaseConnexionException e) {
-						JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
+						JOptionPane.showMessageDialog(null, "Erreur de connexion Ã  la base de donnÃ©e");
 					} catch (DeleteMultipleException e) {
-						JOptionPane.showMessageDialog(null, "Erreur: suppression de plusieurs éléments !");
+						JOptionPane.showMessageDialog(null, "Erreur: suppression de plusieurs Ã©lÃ©ments !");
 					}
 				}
 			}
@@ -114,9 +114,9 @@ public class ManagePlayer extends JPanel{
 					controller.editPlayer(player);
 					manageTable.updatePlayer(idInTable, player);
 				} catch (DatabaseConnexionException e) {
-					JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
+					JOptionPane.showMessageDialog(null, "Erreur de connexion Ã  la base de donnÃ©e");
 				} catch (UpdatePlayerException e) {
-					JOptionPane.showMessageDialog(null, "Erreur lors de la mise à jour de la base de données (nombre incohérent)");
+					JOptionPane.showMessageDialog(null, "Erreur lors de la mise Ã  jour de la base de donnÃ©es (nombre incohÃ©rent)");
 					e.printStackTrace();
 				}
 			}

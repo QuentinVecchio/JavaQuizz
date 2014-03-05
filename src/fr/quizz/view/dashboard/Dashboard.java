@@ -52,6 +52,8 @@ public class Dashboard extends JFrame{
 	
 	public void setViewCenter(JPanel newView)
 	{
+		this.getContentPane().removeAll();
+		this.getContentPane().add(panelButton, BorderLayout.WEST);
 		this.getContentPane().add(newView, BorderLayout.CENTER);
 		this.validate();
 	}
