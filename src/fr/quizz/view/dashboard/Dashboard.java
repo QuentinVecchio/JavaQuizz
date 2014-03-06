@@ -120,11 +120,21 @@ public class Dashboard extends JFrame{
 	
 	class ActionQuizz implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			try {
+				controller.showQuizzDialog();
+			} catch (DatabaseConnexionException e1) {
+				JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
+			}
 		}
 	}
 	
 	class ActionUser implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			try {
+				setViewCenter(controller.showProfilPanel(p));
+			} catch (DatabaseConnexionException e1) {
+				JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
+			}
 		}
 	}
 	

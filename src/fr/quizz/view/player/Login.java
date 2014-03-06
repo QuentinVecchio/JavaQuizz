@@ -39,7 +39,7 @@ public class Login extends JDialog {
 	public void initComponents(){
 		setTitle("Connexion");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(new Dimension(300,300));
+		setSize(new Dimension(300,150));
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 		JPanel panelLogin = new JPanel();
