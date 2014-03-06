@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import fr.quizz.core.Question;
 
@@ -29,7 +28,6 @@ public class Index extends JPanel {
 		private JPanel panelCentral = new JPanel();
 		private JPanel panelAnswer =  new JPanel();
 		private JPanel panelQuestion = new JPanel();
-		private BorderFactory bordure;
     //Panel sud
 		private JButton btnValide = new JButton("Valider");
 		private JButton btnContinuer = new JButton("Continuer");
@@ -54,7 +52,7 @@ public class Index extends JPanel {
 		add(panelHaut, BorderLayout.NORTH);
 		//PanleCenter
 		panelCentral.setLayout(new GridLayout(2,1));
-		panelQuestion.setBorder(bordure.createTitledBorder("Question n°1"));
+		panelQuestion.setBorder(BorderFactory.createTitledBorder("Question n°1"));
 		panelQuestion.add(labelQuestion);
 		panelAnswer.add(textAnswer);
 		panelCentral.setLayout(new GridLayout(3,1));
@@ -65,6 +63,7 @@ public class Index extends JPanel {
 		panelButton.add(btnReset);
 		panelButton.add(btnValide);
 		panelButton.add(btnContinuer);
+		btnContinuer.enableInputMethods(false);
 		add(panelButton, BorderLayout.SOUTH);
 		
 	}
