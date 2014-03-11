@@ -1,5 +1,9 @@
 package fr.quizz.controller;
 
+import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+
 import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
@@ -26,16 +30,61 @@ public class PlayerController extends Controller {
 	}
 
 	public int addPlayer(Player p) throws DatabaseConnexionException, PlayerNotSaveException{
-		//TODO ajouter vérification sur les valeurs du player
+		//TODO ajouter vï¿½rification sur les valeurs du player
 		return model.savePlayer(p);
 	}
 	
 	public void editPlayer(Player p) throws DatabaseConnexionException, UpdatePlayerException{
-		//TODO ajouter verif probablement dans la classe elle-même
+		//TODO ajouter verif probablement dans la classe elle-mï¿½me
 		model.updatePlayer(p);
 	}
 	
 	public void deletePlayer(int id) throws DatabaseConnexionException, DeleteMultipleException{
 		model.delete(id);
+	}
+	
+	/*
+	 * Fonction de sÃ©curisation de la structure de donnÃ©es Player.
+	 * Renvoie TRUE si les donnÃ©es sont bonnes et renvoie FALSE dans le cas contraire.
+	 */
+	public boolean security(Player player)
+	{
+		String erreur = "";
+		//Test name
+			if(player.getName().length() < 3)
+			{
+				erreur += "\nNom trop court.";
+			}
+			else if(player.getName().length() > 255)
+			{
+				erreur += "\nNom trop long.";
+			}
+		//Test email
+			Pattern regexEmail = Pattern.compile(
+			        "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+			);
+			if(regexEmail.matcher(player.getMail()).matches() == false)
+			{
+				erreur +="\nEmail invalide.";
+			}
+		//Test password
+			if(player.getPassword().length() < 5)
+			{
+				erreur += "\nMot de passe trop court.";
+			}
+			else if(player.getPassword().length() > 255)
+			{
+				erreur += "\nMot de passe trop long.";
+			}
+		//Affichage de l'erreur ou non
+			if(erreur.length() != 0)
+			{
+				JOptionPane.showMessageDialog(null, erreur, "Erreur", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			else
+			{
+				return true;
+			}	
 	}
 }

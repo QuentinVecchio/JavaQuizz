@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/fr/quizz/controller/PlayerController.java=UTF-8
 encoding//src/fr/quizz/controller/QuestionController.java=UTF-8
 encoding//src/fr/quizz/model/Model.java=UTF-8
 encoding//src/fr/quizz/model/PlayerModel.java=UTF-8
