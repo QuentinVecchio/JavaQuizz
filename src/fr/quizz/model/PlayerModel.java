@@ -46,7 +46,7 @@ public class PlayerModel extends Model {
 			res = requete.executeQuery();
 			if(res.next())
 			{
-				player = new Player(res.getInt("code_joueur"),res.getString("nom_joueur"),res.getString("passwd_joueur"),res.getString("mail_joueur"));
+				player = new Player(res.getInt("code_joueur"),res.getString("nom_joueur"),res.getString("passwd_joueur"),res.getString("mail_joueur"),res.getInt("admin"));
 			}
 		}
 		catch(SQLException e)
@@ -158,7 +158,7 @@ public class PlayerModel extends Model {
             res = requete.executeQuery();
             
             while(res.next()){
-                    list.add(new Player(res.getInt("code_joueur"),res.getString("nom_joueur"),res.getString("passwd_joueur"),res.getString("mail_joueur")));
+                    list.add(new Player(res.getInt("code_joueur"),res.getString("nom_joueur"),res.getString("passwd_joueur"),res.getString("mail_joueur"),res.getInt("admin")));
             }
             return list;
             

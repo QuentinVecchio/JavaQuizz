@@ -5,7 +5,7 @@ public class Player {
 	private String name;
 	private String password;
 	private String mail;
-
+	private int admin = 0;
 	/**
 	 *  
 	 * @param code
@@ -13,12 +13,13 @@ public class Player {
 	 * @param password
 	 * @param mail
 	 */
-	public Player(int code, String name, String password, String mail) {
+	public Player(int code, String name, String password, String mail, int admin) {
 		super();
 		this.code = code;
 		this.name = name;
 		this.password = password;
 		this.mail = mail;
+		this.admin = admin;
 	}
 
 	public int getCode() {
@@ -53,10 +54,19 @@ public class Player {
 		this.mail = mail;
 	}
 
+	
+	public int getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(int admin) {
+		this.admin = admin;
+	}
+
 	@Override
 	public String toString() {
 		return "Player [code=" + code + ", name=" + name + ", password="
-				+ password + ", mail=" + mail + "]";
+				+ password + ", mail=" + mail + ", admin=" + admin + "]";
 	}
 
 	@Override
@@ -68,6 +78,8 @@ public class Player {
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player) obj;
+		if (admin != other.admin)
+			return false;
 		if (code != other.code)
 			return false;
 		if (mail == null) {
@@ -86,7 +98,5 @@ public class Player {
 		} else if (!password.equals(other.password))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 }

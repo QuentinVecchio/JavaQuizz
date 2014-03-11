@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,6 +33,10 @@ public class Add extends JDialog {
 	private JPanel panelPassword = new JPanel();
 	private JPanel panelButton = new JPanel();
 	private PlayerController controller = new PlayerController();
+	private JPanel panelCheck = new JPanel();
+	private JCheckBox checkAdmin = new JCheckBox("Admin");
+	private JCheckBox checkPlayer = new JCheckBox("Joueur");
+	
 	public Add() {
 		super();
 		setTitle("Ajout d'un joueur");
@@ -50,6 +55,9 @@ public class Add extends JDialog {
 			panelPassword.add(new JLabel("Mot de passe : "));
 			panelPassword.add(textPassword);
 			textPassword.setPreferredSize(new Dimension(200,30));
+		//Panel Check
+			panelCheck.add(checkAdmin);
+			panelCheck.add(checkPlayer);
 		//Panel Button
 			panelButton.add(btnReset);
 			panelButton.add(btnValide);
@@ -60,6 +68,7 @@ public class Add extends JDialog {
 			this.add(panelName);
 			this.add(panelMail);
 			this.add(panelPassword);
+			this.add(panelCheck);
 			this.add(panelButton);
 	}
 	
@@ -70,7 +79,12 @@ public class Add extends JDialog {
 	
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			player = new Player(-1, textName.getText(), textPassword.getText(), textMail.getText());
+			int admin = 0;
+			if(checkAdmin.getText() == "true")
+			{
+				admin = 1;
+			}
+			player = new Player(player.getCode(), textName.getText(), textPassword.getText(), textMail.getText(), admin);
 			if(controller.security(player)== true)
 			{
 				try {
