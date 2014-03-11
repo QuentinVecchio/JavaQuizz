@@ -7,12 +7,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import fr.quizz.controller.PlayerController;
 import fr.quizz.core.Player;
+import fr.quizz.exception.DatabaseConnexionException;
+import fr.quizz.exception.UpdatePlayerException;
 
 public class Profil extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -69,7 +72,18 @@ public class Profil extends JPanel {
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			player = new Player(player.getCode(), textName.getText(), textPassword.getText(), textMail.getText());
-			setVisible(false);
+			if(controller.security(player) == true)
+			{
+				try {
+					controller.editPlayer(player);
+				} catch (DatabaseConnexionException e1) {
+					JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
+				} catch (UpdatePlayerException e2) {
+					JOptionPane.showMessageDialog(null, "Erreur lors de la mise à jour de la base de données (nombre incohérent)");
+					e2.printStackTrace();
+				}
+				setVisible(false);
+			}
 		}
 	}
 	
