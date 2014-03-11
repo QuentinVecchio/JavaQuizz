@@ -2,10 +2,10 @@
 -- version 4.0.6
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Feb 21, 2014 at 04:32 PM
--- Server version: 5.5.33
--- PHP Version: 5.5.3
+-- Client: localhost
+-- Généré le: Mar 11 Mars 2014 à 09:02
+-- Version du serveur: 5.5.33
+-- Version de PHP: 5.5.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `quizz_java`
+-- Base de données: `quizz_java`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Structure de la table `item`
 --
 
 CREATE TABLE `item` (
@@ -37,7 +37,7 @@ CREATE TABLE `item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `joueur`
+-- Structure de la table `joueur`
 --
 
 CREATE TABLE `joueur` (
@@ -45,21 +45,26 @@ CREATE TABLE `joueur` (
   `nom_joueur` varchar(255) NOT NULL,
   `mail_joueur` varchar(255) NOT NULL,
   `passwd_joueur` varchar(255) NOT NULL,
+  `admin` int(1) NOT NULL,
   PRIMARY KEY (`code_joueur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
--- Dumping data for table `joueur`
+-- Contenu de la table `joueur`
 --
 
-INSERT INTO `joueur` (`code_joueur`, `nom_joueur`, `mail_joueur`, `passwd_joueur`) VALUES
-(1, 'Czekala Hugo', 'hugoBG54@hotmail.fr', 'cindy'),
-(2, 'Vecchio Quentin', 'vecchioquentin@hotmail.fr', 'vecchio');
+INSERT INTO `joueur` (`code_joueur`, `nom_joueur`, `mail_joueur`, `passwd_joueur`, `admin`) VALUES
+(1, 'Czekala Hugo', 'hugoBG54@hotmail.fr', 'cindy', 0),
+(2, 'Vecchio Quentin', 'vecchioquentin@hotmail.fr', 'vecchio', 0),
+(4, '', '', '', 0),
+(6, 'root', 'root', 'root', 1),
+(7, 'dd', 'dddddd', 'dddd', 0),
+(8, 'quentin1', 'quentin@google.com', 'testt', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `question`
+-- Structure de la table `question`
 --
 
 CREATE TABLE `question` (
@@ -67,23 +72,22 @@ CREATE TABLE `question` (
   `texte_question` varchar(1000) NOT NULL,
   `reponse_joueur` varchar(255) NOT NULL,
   PRIMARY KEY (`code_question`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `question`
+-- Contenu de la table `question`
 --
 
 INSERT INTO `question` (`code_question`, `texte_question`, `reponse_joueur`) VALUES
 (1, 'Combien l''Italie compte-elle d''étoile ?', '4'),
 (2, 'Date de sortie du macintosh ?', '1984'),
 (3, 'Capitale de la France ?', 'paris'),
-(4, 'La couleur du cheval blanc d''Henri IV ?', 'blanc'),
-(5, 'Prénom de Madame Zertal ?', 'lynda');
+(4, 'La couleur du cheval blanc d''Henri IV ?', 'blanc');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quizz`
+-- Structure de la table `quizz`
 --
 
 CREATE TABLE `quizz` (
@@ -96,7 +100,7 @@ CREATE TABLE `quizz` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `quizz`
+-- Contenu de la table `quizz`
 --
 
 INSERT INTO `quizz` (`code_quizz`, `date_quizz`, `nb_questions_quizz`, `code_joueur`) VALUES
@@ -105,18 +109,18 @@ INSERT INTO `quizz` (`code_quizz`, `date_quizz`, `nb_questions_quizz`, `code_jou
 (3, '2014-02-22', 32, 2);
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `item`
+-- Contraintes pour la table `item`
 --
 ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`code_quizz`) REFERENCES `quizz` (`code_quizz`),
-  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`code_question`) REFERENCES `question` (`code_question`);
+  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`code_question`) REFERENCES `question` (`code_question`),
+  ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`code_quizz`) REFERENCES `quizz` (`code_quizz`);
 
 --
--- Constraints for table `quizz`
+-- Contraintes pour la table `quizz`
 --
 ALTER TABLE `quizz`
   ADD CONSTRAINT `quizz_ibfk_1` FOREIGN KEY (`code_joueur`) REFERENCES `joueur` (`code_joueur`);

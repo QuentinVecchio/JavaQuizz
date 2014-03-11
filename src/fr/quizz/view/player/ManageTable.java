@@ -10,7 +10,7 @@ public class ManageTable extends AbstractTableModel {
 
 	private static final long serialVersionUID = 880100311315812730L;
 
-	private String[] entete = {"Nom", "Adresse mail"};
+	private String[] entete = {"Nom", "Adresse mail","Admin"};
 	
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 	
@@ -40,6 +40,8 @@ public class ManageTable extends AbstractTableModel {
 			return playerList.get(line).getName();
 		case 1:
 			return playerList.get(line).getMail();
+		case 2:
+			return playerList.get(line).getAdmin();
 		default:
 			break;
 		}
