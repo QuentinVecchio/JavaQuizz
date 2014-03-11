@@ -1,5 +1,9 @@
 package fr.quizz.controller;
 
+import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+
 import fr.quizz.core.Question;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
@@ -26,5 +30,30 @@ public class QuestionController extends Controller {
 	
 	public void deleteQuestion(int id) throws DatabaseConnexionException, DeleteMultipleException{
 		model.delete(id);
+	}
+	
+	public boolean security(Question question)
+	{
+		String erreur = "";
+		//Test question
+			if(question.getText().length() > 1000)
+			{
+				erreur += "\nQuestion trop longue.";
+			}
+		//Test reponse
+			if(question.getAnswer().length() > 255)
+			{
+				erreur += "\nRéponse trop longue.";
+			}
+		//Affichage de l'erreur ou non
+			if(erreur.length() != 0)
+			{
+				JOptionPane.showMessageDialog(null, erreur, "Erreur", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			else
+			{
+				return true;
+			}	
 	}
 }

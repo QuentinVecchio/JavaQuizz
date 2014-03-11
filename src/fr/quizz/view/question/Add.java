@@ -63,22 +63,24 @@ public class Add extends JDialog {
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			question = new Question(-1, textQuestion.getText(), textAnswer.getText());
-			
-			try {
-				question.setCode(controller.addQuestion(question));
-			} catch (DatabaseConnexionException e1) {
-				JOptionPane.showMessageDialog(null, "Impossible de se connecter à la base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
-			} catch (QuestionNotSaveException e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Impossible d'ajouter le joueur en base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
-			}
-			
-			if(question.getCode() > -1){
-				JOptionPane.showMessageDialog(null, "La question a été créé", "Information", JOptionPane.INFORMATION_MESSAGE);
-				setVisible(false);
+			if(controller.security(question) == true)
+			{
+				try {
+					question.setCode(controller.addQuestion(question));
+				} catch (DatabaseConnexionException e1) {
+					JOptionPane.showMessageDialog(null, "Impossible de se connecter à la base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
+				} catch (QuestionNotSaveException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Impossible d'ajouter le joueur en base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
 				
-			}else{
-				JOptionPane.showMessageDialog(null, "La question n'a pas été créé", "Erreur", JOptionPane.ERROR_MESSAGE);
+				if(question.getCode() > -1){
+					JOptionPane.showMessageDialog(null, "La question a été créé", "Information", JOptionPane.INFORMATION_MESSAGE);
+					setVisible(false);
+					
+				}else{
+					JOptionPane.showMessageDialog(null, "La question n'a pas été créé", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}
