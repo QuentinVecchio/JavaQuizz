@@ -1,19 +1,23 @@
 package fr.quizz.view.dashboard;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import fr.quizz.controller.DashboardController;
 import fr.quizz.core.Player;
+import fr.quizz.core.Sound;
 import fr.quizz.exception.DatabaseConnexionException;
 
 public class Dashboard extends JFrame{
@@ -32,6 +36,12 @@ public class Dashboard extends JFrame{
 	public Dashboard(DashboardController dC,Player p) 
 	{
 		super();
+		//JOKE
+		if(p.getName().length() > 50)
+		{
+			Sound s = new Sound();
+			s.run("joke.mp3");
+		}
 		//Définition du controller
 		this.controller = dC;
 		//Définition du joueur
@@ -65,7 +75,8 @@ public class Dashboard extends JFrame{
 			JLabel hello = new JLabel(" Bonjour " + this.p.getName(),SwingConstants.CENTER);
 			panelButton.add(hello);
 		//Construction Panel Admin
-			this.panelAdmin();
+			if(p.getAdmin() == 1)
+				this.panelAdmin();
 		//Construction Panel Gamer
 			this.panelPlayer();
 	}
@@ -120,11 +131,7 @@ public class Dashboard extends JFrame{
 	
 	class ActionQuizz implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			try {
-				controller.showQuizzDialog();
-			} catch (DatabaseConnexionException e1) {
-				JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
-			}
+				Init dialog = new Init();
 		}
 	}
 	
@@ -142,6 +149,52 @@ public class Dashboard extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
 			//TODO fermer la BDD !!!
+		}
+	}
+	
+	class Init extends JDialog {
+		private static final long serialVersionUID = 1L;
+		private JButton btnValide = new JButton("Valider");
+		private JTextField textKeyWord = new JTextField();
+		private JTextField nbQuestion = new JTextField();
+		private JPanel panelKeyWord = new JPanel();
+		private JPanel panelNbQuestion = new JPanel();
+		private JPanel panelButtons = new JPanel();
+		
+		public Init()
+		{
+			super();
+			setSize(new Dimension(250,290));
+			setLocationRelativeTo(null);
+			setModal(true);
+			//Panel Question
+				panelKeyWord.add(new JLabel("Mot-clé : "));
+				panelKeyWord.add(textKeyWord);
+				textKeyWord.setPreferredSize(new Dimension(200,30));
+			//Panel Answer
+				panelNbQuestion.add(new JLabel("Nombre de questions : "));
+				panelNbQuestion.add(nbQuestion);
+				nbQuestion.setPreferredSize(new Dimension(200,30));
+			//Panel Button
+				panelButtons.add(btnValide);
+				btnValide.addActionListener(new ActionValide());
+			//Panel Main
+				this.setLayout(new GridLayout(3,1));
+				this.add(panelKeyWord);
+				this.add(panelNbQuestion);
+				this.add(panelButtons);
+			this.setVisible(true);
+		}
+		
+		class ActionValide implements ActionListener{
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setViewCenter(controller.showQuizz(Integer.parseInt(nbQuestion.getText()),textKeyWord.getText()));
+					setVisible(false);
+				} catch (DatabaseConnexionException e1) {
+					JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
+				}				
+			}
 		}
 	}
 }

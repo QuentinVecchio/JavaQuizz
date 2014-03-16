@@ -1,12 +1,13 @@
 package fr.quizz.controller;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.model.PlayerModel;
 import fr.quizz.model.QuestionModel;
-import fr.quizz.view.Init;
+import fr.quizz.view.Index;
 import fr.quizz.view.dashboard.Dashboard;
 import fr.quizz.view.player.ManagePlayer;
 import fr.quizz.view.question.ManageQuestion;
@@ -35,8 +36,25 @@ public class DashboardController extends Controller {
 		return profil;
 	}
 	
-	public void showQuizzDialog() throws DatabaseConnexionException
-	{
-		Init init = new Init();
+	public JPanel showQuizz(int nbQuestion, String keyWord) throws DatabaseConnexionException{
+		if(nbQuestion <= 0 || keyWord == "")
+		{
+			String erreur = "";
+			if(nbQuestion <= 0)
+				erreur = "Nombre de question non valide.\n";
+			else
+				erreur = "Mot clé non valide.";
+			JOptionPane.showMessageDialog(null, erreur, "Erreur", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		else
+		{
+			/*
+			 * Passer à la vue pQ
+			 * Un array list de quizz
+			 */
+			Index pQ = new Index();
+			return pQ;
+		}	
 	}
 }
