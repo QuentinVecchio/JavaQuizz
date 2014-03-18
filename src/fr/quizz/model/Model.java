@@ -51,9 +51,9 @@ public class Model {
 	protected Model(String tableName, String tableId){
 		this.tableName = tableName;
 		this.tableId = tableId;
-		BDD_URL = BDD_IUT[0];
-		BDD_USER = BDD_IUT[1];
-		BDD_PASSWORD = BDD_IUT[2];
+		BDD_URL = BDD_QUENTIN[0];
+		BDD_USER = BDD_QUENTIN[1];
+		BDD_PASSWORD = BDD_QUENTIN[2];
 	}
 	
     /**
