@@ -37,10 +37,10 @@ public class Dashboard extends JFrame{
 	{
 		super();
 		//JOKE
-		if(p.getName().length() > 50)
+		if(p.getName().length() > 40)
 		{
 			Sound s = new Sound();
-			s.run("joke.mp3");
+			s.run("joke.wav");
 		}
 		//Définition du controller
 		this.controller = dC;

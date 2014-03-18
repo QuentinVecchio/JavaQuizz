@@ -68,7 +68,7 @@ public class Edit extends JDialog {
 		btnReset.addActionListener(new ActionReset());
 		btnValide.addActionListener(new ActionValide());
 	//Panel Main
-		this.setLayout(new GridLayout(4,1));
+		this.setLayout(new GridLayout(5,1));
 		this.add(panelName);
 		this.add(panelMail);
 		this.add(panelPassword);

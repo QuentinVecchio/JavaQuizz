@@ -64,7 +64,7 @@ public class Add extends JDialog {
 			btnReset.addActionListener(new ActionReset());
 			btnValide.addActionListener(new ActionValide());
 		//Panel Main
-			this.setLayout(new GridLayout(4,1));
+			this.setLayout(new GridLayout(5,1));
 			this.add(panelName);
 			this.add(panelMail);
 			this.add(panelPassword);
@@ -84,7 +84,7 @@ public class Add extends JDialog {
 			{
 				admin = 1;
 			}
-			player = new Player(player.getCode(), textName.getText(), textPassword.getText(), textMail.getText(), admin);
+			player = new Player(-1, textName.getText(), textPassword.getText(), textMail.getText(), admin);
 			if(controller.security(player)== true)
 			{
 				try {
