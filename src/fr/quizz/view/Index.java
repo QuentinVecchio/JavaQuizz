@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -120,5 +122,23 @@ public class Index extends JPanel {
 	{
 		
 	}
+	
+	class ActionResetAnswer implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			textAnswer.setText("");
+		}
+	}
+	
+	
+	class ActionContinue implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
+	class ActionSoumettre implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
 }
 
