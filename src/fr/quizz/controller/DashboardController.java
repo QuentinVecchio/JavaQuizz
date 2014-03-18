@@ -37,10 +37,10 @@ public class DashboardController extends Controller {
 	}
 	
 	public JPanel showQuizz(int nbQuestion, String keyWord) throws DatabaseConnexionException{
-		if(nbQuestion <= 0 || keyWord == "")
+		if(nbQuestion < 0 || keyWord.trim().length() == 0)
 		{
 			String erreur = "";
-			if(nbQuestion <= 0)
+			if(nbQuestion < 0)
 				erreur = "Nombre de question non valide.\n";
 			else
 				erreur = "Mot clé non valide.";
