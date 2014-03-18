@@ -90,11 +90,12 @@ public class ManagePlayer extends JPanel{
 				final int answer = JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir supprimer ?", "Titre", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if(answer == 0){
 					try {
-						controller.deletePlayer(idInTable);
+						controller.deletePlayer(manageTable.getPlayerList().get(idInTable).getCode());
 						manageTable.removePlayer(idInTable);
 					} catch (DatabaseConnexionException e) {
 						JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
 					} catch (DeleteMultipleException e) {
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Erreur: suppression de plusieurs éléments !");
 					}
 				}

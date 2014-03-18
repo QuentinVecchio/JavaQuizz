@@ -111,7 +111,7 @@ public class PlayerModel extends Model {
     	if(player.getCode() != -1) return -1;
     	
     	Connection connexion = getConnection();
-        String sql = "INSERT INTO "+this.getTableName()+" (nom_joueur,mail_joueur, passwd_joueur) VALUES (?,?,?)";
+        String sql = "INSERT INTO "+this.getTableName()+" (nom_joueur,mail_joueur, passwd_joueur, admin) VALUES (?,?,?,?)";
         PreparedStatement requete = null;
         ResultSet res = null;
         
@@ -120,7 +120,7 @@ public class PlayerModel extends Model {
             requete.setString(1,player.getName());
             requete.setString(2,player.getMail());
             requete.setString(3,player.getPassword());
-
+            requete.setInt(4, player.getAdmin());
             requete.executeUpdate();
 
             res = requete.getGeneratedKeys();

@@ -112,7 +112,7 @@ public class Model {
             int res = requete.executeUpdate();
             
             if(res != 1){
-            	throw new DeleteMultipleException("Erreur lors de la suppression de l'element:"+id);
+            	throw new DeleteMultipleException("Erreur lors de la suppression de l'element:"+id+"res"+res);
             }
             
 
