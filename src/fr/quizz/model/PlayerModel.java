@@ -68,7 +68,36 @@ public class PlayerModel extends Model {
      * @throws DeleteMultipleException 
      */
     public void deletePlayer(Player player) throws DatabaseConnexionException, DeleteMultipleException{
-    	super.delete(player.getCode());
+
+    	if(player.getCode() == -1) return;
+    	
+    	Connection connexion = getConnection();
+        
+        PreparedStatement requete = null;
+        try
+        {
+    		connexion.setAutoCommit(false);
+    		String sql = "DELETE FROM joueur WHERE code_joueur = ? ";
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
+            requete.setInt(1, player.getCode());
+            
+            int res = requete.executeUpdate();
+            System.out.println("res 1er:"+res);
+    		sql = "DELETE FROM quizz WHERE code_joueur = ? ";
+            requete  = connexion.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);    
+            requete.setInt(1, player.getCode());
+            res = requete.executeUpdate();
+            System.out.println("res 2e:"+res);
+            commit(connexion);
+        }
+        catch(SQLException e)
+        {
+    		rollback(connexion);
+            System.err.println("Probleme avec lors de la transaction" + e);
+        }finally{
+            closeStatement(requete);
+            closeConnection(connexion);	
+        }
     }
 
     /**
