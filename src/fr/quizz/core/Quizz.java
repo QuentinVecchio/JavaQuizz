@@ -1,14 +1,13 @@
 package fr.quizz.core;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 public class Quizz {
 	private int code = -1;
 	private int numberQuestions;
-	private ArrayList<String> answers;
 	private Date date;
 	private int score = 0;
+	private int code_joueur;
 	
 	/**
 	 * @param code
@@ -17,14 +16,13 @@ public class Quizz {
 	 * @param date
 	 * @param score
 	 */
-	public Quizz(int code, int numberQuestions, ArrayList<String> answers,
-			Date date, int score) {
+	public Quizz(int code, int numberQuestions,	Date date, int score, int code_joueur) {
 		super();
 		this.code = code;
 		this.numberQuestions = numberQuestions;
-		this.answers = answers;
 		this.date = date;
 		this.score = score;
+		this.code_joueur = code_joueur;
 	}
 
 	public int getCode() {
@@ -43,14 +41,6 @@ public class Quizz {
 		this.numberQuestions = numberQuestions;
 	}
 
-	public ArrayList<String> getAnswers() {
-		return answers;
-	}
-
-	public void setAnswers(ArrayList<String> answers) {
-		this.answers = answers;
-	}
-
 	public Date getDate() {
 		return date;
 	}
@@ -63,11 +53,35 @@ public class Quizz {
 		return score;
 	}
 
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getCode_joueur() {
+		return code_joueur;
+	}
+
+	public void setCode_joueur(int code_joueur) {
+		this.code_joueur = code_joueur;
+	}
+
 	@Override
 	public String toString() {
 		return "Quizz [code=" + code + ", numberQuestions=" + numberQuestions
-				+ ", answers=" + answers + ", date=" + date + ", score="
-				+ score + "]";
+				+ ", date=" + date + ", score=" + score + ", code_joueur="
+				+ code_joueur + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + code;
+		result = prime * result + code_joueur;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + numberQuestions;
+		result = prime * result + score;
+		return result;
 	}
 
 	@Override
@@ -79,12 +93,9 @@ public class Quizz {
 		if (getClass() != obj.getClass())
 			return false;
 		Quizz other = (Quizz) obj;
-		if (answers == null) {
-			if (other.answers != null)
-				return false;
-		} else if (!answers.equals(other.answers))
-			return false;
 		if (code != other.code)
+			return false;
+		if (code_joueur != other.code_joueur)
 			return false;
 		if (date == null) {
 			if (other.date != null)
@@ -96,5 +107,7 @@ public class Quizz {
 		if (score != other.score)
 			return false;
 		return true;
-	}	
+	}
+
+	
 }
