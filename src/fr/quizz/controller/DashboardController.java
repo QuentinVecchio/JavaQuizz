@@ -1,9 +1,14 @@
 package fr.quizz.controller;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import fr.quizz.core.Player;
+import fr.quizz.core.Question;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.model.PlayerModel;
 import fr.quizz.model.QuestionModel;
@@ -53,6 +58,36 @@ public class DashboardController extends Controller {
 			 * Passer à la vue pQ
 			 * Un array list de quizz
 			 */
+			final QuestionModel questionModel = new QuestionModel();
+			ArrayList<Question> listQuestion =  questionModel.getAllQuestionByTexteQuestion(keyWord);
+			if(listQuestion.size() == 0){
+				JOptionPane.showMessageDialog(null, "Aucune question trouvée", "Erreur", JOptionPane.ERROR_MESSAGE);
+				return null;
+			}else{
+
+				final Random s = new Random();
+				int maxElt = (nbQuestion < listQuestion.size()) ?nbQuestion: listQuestion.size();
+				final int max = maxElt;
+				ArrayList<Integer> selectIndex = new ArrayList<Integer>();
+				ArrayList<Question> selectedQuestion = new ArrayList<Question>();
+
+				
+				while(maxElt > 0){
+					int current;
+					do{
+						current = s.nextInt(max);
+
+					}while(current < 0);
+					
+					if(!selectIndex.contains(current)){
+						selectIndex.add(current);
+						selectedQuestion.add(listQuestion.get(current));
+						maxElt --;
+					}
+
+				}
+				System.out.println(selectedQuestion);
+			}
 			
 			Index pQ = new Index();
 			return pQ;
