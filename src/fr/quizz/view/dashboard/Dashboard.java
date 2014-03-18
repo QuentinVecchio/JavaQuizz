@@ -164,6 +164,7 @@ public class Dashboard extends JFrame{
 		public Init()
 		{
 			super();
+			setTitle("Paramétrage Quizz:");
 			setSize(new Dimension(250,290));
 			setLocationRelativeTo(null);
 			setModal(true);

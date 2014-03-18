@@ -55,6 +55,11 @@ public class Profil extends JPanel {
 		panelPassword.add(textPassword);
 		textPassword.setPreferredSize(new Dimension(200,30));
 	//Panel Check
+		if(p.getAdmin() == 1){
+			checkAdmin.setSelected(true);
+		}else{
+			checkPlayer.setSelected(true);
+		}
 		panelCheck.add(checkAdmin);
 		panelCheck.add(checkPlayer);
 	//Panel Button

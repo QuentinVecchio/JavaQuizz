@@ -53,6 +53,7 @@ public class DashboardController extends Controller {
 			 * Passer à la vue pQ
 			 * Un array list de quizz
 			 */
+			
 			Index pQ = new Index();
 			return pQ;
 		}	
