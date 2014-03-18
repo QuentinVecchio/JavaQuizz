@@ -84,13 +84,10 @@ public class DashboardController extends Controller {
 						selectedQuestion.add(listQuestion.get(current));
 						maxElt --;
 					}
-
 				}
-				System.out.println(selectedQuestion);
+				Index pQ = new Index(selectedQuestion);
+				return pQ;
 			}
-			
-			Index pQ = new Index();
-			return pQ;
-		}	
+		}
 	}
 }
