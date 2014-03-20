@@ -17,7 +17,7 @@ import fr.quizz.controller.PlayerController;
 import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
-import fr.quizz.exception.UpdatePlayerException;
+import fr.quizz.exception.UpdateException;
 
 public class ManagePlayer extends JPanel{
 
@@ -116,7 +116,7 @@ public class ManagePlayer extends JPanel{
 					manageTable.updatePlayer(idInTable, player);
 				} catch (DatabaseConnexionException e) {
 					JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
-				} catch (UpdatePlayerException e) {
+				} catch (UpdateException e) {
 					JOptionPane.showMessageDialog(null, "Erreur lors de la mise à jour de la base de données (nombre incohérent)");
 					e.printStackTrace();
 				}

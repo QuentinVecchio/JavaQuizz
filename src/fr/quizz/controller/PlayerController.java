@@ -8,7 +8,7 @@ import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.PlayerNotSaveException;
-import fr.quizz.exception.UpdatePlayerException;
+import fr.quizz.exception.UpdateException;
 import fr.quizz.model.PlayerModel;
 import fr.quizz.view.player.Login;
 
@@ -34,7 +34,7 @@ public class PlayerController extends Controller {
 		return model.savePlayer(p);
 	}
 	
-	public void editPlayer(Player p) throws DatabaseConnexionException, UpdatePlayerException{
+	public void editPlayer(Player p) throws DatabaseConnexionException, UpdateException{
 		//TODO ajouter verif probablement dans la classe elle-m�me
 		model.updatePlayer(p);
 	}

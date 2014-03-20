@@ -10,6 +10,7 @@ import fr.quizz.core.Question;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.QuestionNotSaveException;
+import fr.quizz.exception.UpdateException;
 import fr.quizz.main.Launcher;
 	/**
 	 * 	 This class allow to manage the question table of the database
@@ -140,6 +141,7 @@ public class QuestionModel extends Model {
     	if(question.getCode() != -1) return -1;
     	
     	Connection connexion = getConnection();
+
         String sql = "INSERT INTO "+this.getTableName()+" (texte_question,reponse_joueur) VALUES (?,?)";
         PreparedStatement requete = null;
         ResultSet res = null;
@@ -149,6 +151,7 @@ public class QuestionModel extends Model {
             requete  = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             requete.setString(1,question.getText());
             requete.setString(2,question.getAnswer());                    
+            requete.executeUpdate();
             
             res = requete.getGeneratedKeys();
             if(res.next()){
@@ -178,5 +181,33 @@ public class QuestionModel extends Model {
     public void deleteQuestion(Question question) throws DatabaseConnexionException, DeleteMultipleException{
     	super.delete(question.getCode());
     }
+    
+    
+    public void updateQuestion(Question question) throws DatabaseConnexionException, UpdateException{
+    	if(question.getCode() == -1) return;
+    	Connection connexion = getConnection();
+        String sql = "UPDATE "+this.getTableName()+" SET texte_question= ? , reponse_joueur = ? WHERE "+this.getTableId()+"= ?";
+        PreparedStatement requete = null;
+        
+        try{
+            requete  = connexion.prepareStatement(sql);
+            requete.setString(1, question.getText());
+            requete.setString(2, question.getAnswer());
+            requete.setInt(3, question.getCode());
+            
+            final int res = requete.executeUpdate();
+            if(res != 1){
+            	throw new UpdateException("Il y a "+res+" ligne(s) modifiée(s)");
+            }
+      
+        }catch(SQLException e){
+        	Launcher.printException(e);
+        	System.err.println("Probleme avec la requete : " + sql);
+        }finally{
+            closeStatement(requete);
+            closeConnection(connexion);        	
+        }
+    }     
+    
     
 }

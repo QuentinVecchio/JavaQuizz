@@ -1,10 +1,10 @@
 package fr.quizz.exception;
 
-public class UpdatePlayerException extends Exception {
+public class UpdateException extends Exception {
 	
 	private static final long serialVersionUID = -3200901529771269188L;
 
-	public UpdatePlayerException(String message) {
+	public UpdateException(String message) {
 		super(message);
 	}
 }

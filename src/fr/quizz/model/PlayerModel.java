@@ -10,7 +10,7 @@ import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.PlayerNotSaveException;
-import fr.quizz.exception.UpdatePlayerException;
+import fr.quizz.exception.UpdateException;
 import fr.quizz.main.Launcher;
 
 	/**
@@ -142,7 +142,7 @@ public class PlayerModel extends Model {
         return -1;
     }
     
-    public void updatePlayer(Player player) throws DatabaseConnexionException, UpdatePlayerException{
+    public void updatePlayer(Player player) throws DatabaseConnexionException, UpdateException{
     	if(player.getCode() == -1) return;
     	Connection connexion = getConnection();
         String sql = "UPDATE "+this.getTableName()+" SET nom_joueur = ?, mail_joueur=?, passwd_joueur=? WHERE "+this.getTableId()+"= ?";
@@ -157,7 +157,7 @@ public class PlayerModel extends Model {
             
             final int res = requete.executeUpdate();
             if(res != 1){
-            	throw new UpdatePlayerException("Il y a "+res+" ligne(s) modifiée(s)");
+            	throw new UpdateException("Il y a "+res+" ligne(s) modifiée(s)");
             }
       
         }catch(SQLException e){

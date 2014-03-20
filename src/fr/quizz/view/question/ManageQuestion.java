@@ -17,6 +17,7 @@ import fr.quizz.controller.QuestionController;
 import fr.quizz.core.Question;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
+import fr.quizz.exception.UpdateException;
 import fr.quizz.view.question.Edit;
 
 public class ManageQuestion extends JPanel{
@@ -111,10 +112,10 @@ public class ManageQuestion extends JPanel{
 					manageTable.updateQuestion(idInTable, question);
 				} catch (DatabaseConnexionException e) {
 					JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
-				} /*catch ( e) {
+				}catch (UpdateException e) {
 					JOptionPane.showMessageDialog(null, "Erreur lors de la mise à jour de la base de données (nombre incohérent)");
 					e.printStackTrace();
-				}*/
+				}
 			}
 		}
 	}

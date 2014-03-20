@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import fr.quizz.controller.PlayerController;
 import fr.quizz.core.Player;
 import fr.quizz.exception.DatabaseConnexionException;
-import fr.quizz.exception.UpdatePlayerException;
+import fr.quizz.exception.UpdateException;
 
 public class Profil extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -95,7 +95,7 @@ public class Profil extends JPanel {
 					controller.editPlayer(player);
 				} catch (DatabaseConnexionException e1) {
 					JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
-				} catch (UpdatePlayerException e2) {
+				} catch (UpdateException e2) {
 					JOptionPane.showMessageDialog(null, "Erreur lors de la mise à jour de la base de données (nombre incohérent)");
 					e2.printStackTrace();
 				}

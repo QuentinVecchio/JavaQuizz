@@ -1,13 +1,12 @@
 package fr.quizz.controller;
 
-import java.util.regex.Pattern;
-
 import javax.swing.JOptionPane;
 
 import fr.quizz.core.Question;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.QuestionNotSaveException;
+import fr.quizz.exception.UpdateException;
 import fr.quizz.model.QuestionModel;
 
 public class QuestionController extends Controller {
@@ -23,9 +22,8 @@ public class QuestionController extends Controller {
 		return model.saveQuestion(q);
 	}
 	
-	public void editQuestion(Question q) throws DatabaseConnexionException{
-		//TODO ajouter verif probablement dans la classe elle-même
-		//
+	public void editQuestion(Question q) throws DatabaseConnexionException, UpdateException{
+		model.updateQuestion(q);
 	}
 	
 	public void deleteQuestion(int id) throws DatabaseConnexionException, DeleteMultipleException{

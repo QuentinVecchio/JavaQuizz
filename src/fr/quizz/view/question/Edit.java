@@ -65,10 +65,9 @@ public class Edit extends JDialog {
 	
 	class ActionValide implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			question = new Question(question.getCode(), question.getText(), question.getAnswer());
-			if(controller.security(question) == true)
-			{
-				setVisible(false);
+			question = new Question(question.getCode(), textQuestion.getText(), textAnswer.getText());
+			if(controller.security(question)){
+				setVisible(false);					
 			}
 		}
 	}
