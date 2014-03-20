@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
+import fr.quizz.main.Launcher;
 	/**
 	 * 	 
 	 * @author Matthieu CLIN, Quentin VECCHIO
@@ -80,7 +81,7 @@ public class Model {
         catch(SQLException e)
         {
                 System.err.println("Probleme avec la requete : " + sql);
-                e.printStackTrace();
+                Launcher.printException(e);
         }finally{
             closeResultSet(res);
             closeStatement(requete);
@@ -120,7 +121,7 @@ public class Model {
         catch(SQLException e)
         {
             System.err.println("Probleme avec la requête");
-            e.printStackTrace();
+            Launcher.printException(e);
         }finally{
             closeStatement(requete);
             closeConnection(connexion);	
@@ -143,12 +144,12 @@ public class Model {
 				connection = DriverManager.getConnection(BDD_URL, BDD_USER, BDD_PASSWORD);
 			}
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			Launcher.printException(e);
 			throw new DatabaseConnexionException("Erreur de connexion à la base de donnée");
 			
 		}catch (SQLException e) {
 			closeConnection(connection);
-			e.printStackTrace();
+			Launcher.printException(e);
 			throw new DatabaseConnexionException("Erreur de connexion à la base de donnée");
 		}
 		
@@ -166,7 +167,7 @@ public class Model {
 					res.close();	
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Launcher.printException(e);
 			}			
 		}
 	}
@@ -182,7 +183,7 @@ public class Model {
 					s.close();	
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Launcher.printException(e);
 			}	
 		}
 		
@@ -199,7 +200,7 @@ public class Model {
 					c.close();	
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Launcher.printException(e);
 			}
 		}
 	}
@@ -217,7 +218,7 @@ public class Model {
 				}
 			}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Launcher.printException(e);
 			}
 		}
 	}
@@ -235,7 +236,7 @@ public class Model {
 				}
 			}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Launcher.printException(e);
 			}
 		}
 	}

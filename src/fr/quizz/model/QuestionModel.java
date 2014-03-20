@@ -10,6 +10,7 @@ import fr.quizz.core.Question;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.QuestionNotSaveException;
+import fr.quizz.main.Launcher;
 	/**
 	 * 	 This class allow to manage the question table of the database
 	 * @author Matthieu CLIN, Quentin VECCHIO
@@ -46,9 +47,8 @@ public class QuestionModel extends Model {
             
             return question;
         }
-        catch(SQLException e)
-        {
-                System.err.println("Probleme avec la requete exist : " + sql + " " + e);
+        catch(SQLException e){
+        	Launcher.printException(e);
         }finally{
         	closeResultSet(res);
             closeStatement(requete);
@@ -84,7 +84,7 @@ public class QuestionModel extends Model {
         catch(SQLException e)
         {
             System.err.println("Probleme avec la requete getAllQuestion : " + sql);
-            e.printStackTrace();
+            Launcher.printException(e);
         }finally{
         	closeResultSet(res);
             closeStatement(requete);
@@ -118,7 +118,7 @@ public class QuestionModel extends Model {
         catch(SQLException e)
         {
             System.err.println("Probleme avec la requete getAllQuestion : " + sql);
-            e.printStackTrace();
+            Launcher.printException(e);
         }finally{
         	closeResultSet(res);
             closeStatement(requete);
@@ -160,6 +160,7 @@ public class QuestionModel extends Model {
         catch(SQLException e)
         {
         	System.err.println("Probleme avec la requete : " + sql + " " + e);
+        	Launcher.printException(e);
         }finally{
             closeResultSet(res);
             closeStatement(requete);

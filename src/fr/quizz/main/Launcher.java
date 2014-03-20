@@ -15,4 +15,9 @@ public class Launcher {
 		pC.login();
 	}
 
+	
+	public static void printException(Exception e){
+		//e.printStackTrace();
+	}
+	
 }
