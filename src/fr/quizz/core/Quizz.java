@@ -1,11 +1,10 @@
 package fr.quizz.core;
 
-import java.sql.Date;
 
 public class Quizz {
 	private int code = -1;
 	private int numberQuestions;
-	private Date date;
+	private String date;
 	private int score = 0;
 	private int code_joueur;
 	
@@ -16,7 +15,7 @@ public class Quizz {
 	 * @param d
 	 * @param score
 	 */
-	public Quizz(int code, int numberQuestions,Date d, int score, int code_joueur) {
+	public Quizz(int code, int numberQuestions,String d, int score, int code_joueur) {
 		super();
 		this.code = code;
 		this.numberQuestions = numberQuestions;
@@ -41,11 +40,11 @@ public class Quizz {
 		this.numberQuestions = numberQuestions;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

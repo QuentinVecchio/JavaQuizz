@@ -23,7 +23,7 @@ public class ItemModel extends Model {
      * @throws DatabaseConnexionException if connection is lost
      * @throws ItemNotSaveException if insert fails
      */
-    public int saveItem(Item item) throws DatabaseConnexionException, ItemNotSaveException{
+    public void saveItem(Item item) throws DatabaseConnexionException, ItemNotSaveException{
     	
     	Connection connexion = getConnection();
         String sql = "INSERT INTO "+this.getTableName()+" (code_question,code_quizz, reponse_joueur) VALUES (?,?,?)";
@@ -35,16 +35,9 @@ public class ItemModel extends Model {
             requete.setInt(1,item.getCode_question());
             requete.setInt(2,item.getCode_quizz());
             requete.setString(3,item.getReponse_joueur());
- 
+
             requete.executeUpdate();
 
-            res = requete.getGeneratedKeys();
-            if(res.next()){
-            	return res.getInt(1);
-            }else{
-            	throw new ItemNotSaveException("Impossible d'enregistrer l'item");
-            }
-            
         }catch(SQLException e){
         	Launcher.printException(e);
         	System.err.println("Probleme avec la requete : " + sql);
@@ -53,7 +46,6 @@ public class ItemModel extends Model {
             closeStatement(requete);
             closeConnection(connexion);        	
         }
-        return -1;
     }
 	
 }
