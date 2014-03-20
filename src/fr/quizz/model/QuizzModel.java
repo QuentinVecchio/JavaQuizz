@@ -12,7 +12,7 @@ import fr.quizz.main.Launcher;
 
 public class QuizzModel extends Model {
 
-	protected QuizzModel() {
+	public QuizzModel() {
 		super("quizz", "code_quizz");
 	}
 	
