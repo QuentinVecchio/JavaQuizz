@@ -33,10 +33,10 @@ public class QuizzModel extends Model {
         
         try{
             requete  = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            requete.setString(1,quizz.getDate().toString());
+
+            requete.setString(1,quizz.getDate());
             requete.setInt(2,quizz.getNumberQuestions());
             requete.setInt(3,quizz.getCode_joueur());
-            
             requete.executeUpdate();
 
             res = requete.getGeneratedKeys();
