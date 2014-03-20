@@ -87,7 +87,7 @@ public class ManageQuestion extends JPanel{
 				final int answer = JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir supprimer ?", "Titre", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if(answer == 0){
 					try {
-						controller.deleteQuestion(idInTable);
+						controller.deleteQuestion(questionList.get(idInTable).getCode());
 						manageTable.removeQuestion(idInTable);
 					} catch (DatabaseConnexionException e) {
 						JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de donnée");
