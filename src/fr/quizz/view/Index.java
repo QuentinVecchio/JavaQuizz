@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,8 +18,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.quizz.core.Item;
+import fr.quizz.core.Player;
 import fr.quizz.core.Question;
+import fr.quizz.core.Quizz;
 import fr.quizz.core.Sound;
+import fr.quizz.exception.DatabaseConnexionException;
+import fr.quizz.exception.ItemNotSaveException;
+import fr.quizz.exception.QuizzNotSaveException;
+import fr.quizz.model.ItemModel;
+import fr.quizz.model.QuizzModel;
 
 public class Index extends JPanel {
 
@@ -42,15 +51,21 @@ public class Index extends JPanel {
 		private JButton btnReset = new JButton("RAZ");
 		private JPanel panelButton = new JPanel();
 	//Variables
+		private Player p;
+		private QuizzModel modelQuizz = new QuizzModel();
+		private ItemModel modelItem = new ItemModel();
+		private ArrayList<Item> ListItem = new ArrayList<>();
+		private Quizz quizz;
 		private int indexQuestion = 0;
 		private int nbQuestion = 0;
 		private int nbBonneRep = 0;
 		private int nbMauvaiseRep = 0;
 		private ArrayList<Question> questions = new ArrayList<Question>();
 		
-	public Index(ArrayList<Question> questions)
+	public Index(ArrayList<Question> questions,Player p)
 	{
 		super();
+		this.p = p;
 		this.questions = questions;
 		nbQuestion = questions.size();
 		this.setLayout(new BorderLayout());
@@ -91,6 +106,8 @@ public class Index extends JPanel {
 	
 	public void verif()
 	{
+		//Enregistrement de la réponse
+		ListItem.add(new Item(questions.get(indexQuestion).getCode(), -1, textAnswer.getText()));
 		Sound son = new Sound();
 		if(questions.get(indexQuestion).getAnswer().equals(textAnswer.getText()))
 		{
@@ -125,8 +142,17 @@ public class Index extends JPanel {
 		labelAnswer.setText("");
 	}
 	
-	private void finish()
+	private void finish() throws DatabaseConnexionException, QuizzNotSaveException, ItemNotSaveException
 	{
+		//Date d = new Date();
+		this.quizz = new Quizz(-1,nbQuestion,null,nbBonneRep,p.getCode());
+		//Remplissage des code_quizz
+		int indexQuizz = modelQuizz.saveQuizz(quizz);
+		for(int i=0;i!= indexQuestion;i++)
+		{
+			ListItem.get(i).setCode_quizz(indexQuizz);
+			modelItem.saveItem(ListItem.get(i));
+		}
 		String texte = "Fin du Quizz.\nRésultat : \n";
 		texte+= "Bonne réponse : " + String.valueOf(nbBonneRep) + "/" + String.valueOf(nbQuestion) + "\n";
 		texte+= "Mauvaise réponse : " + String.valueOf(nbMauvaiseRep) + "/" + String.valueOf(nbQuestion) + "\n";
@@ -156,7 +182,13 @@ public class Index extends JPanel {
 			}
 			else
 			{
-				finish();
+				try {
+					finish();
+				} catch (DatabaseConnexionException | QuizzNotSaveException
+						| ItemNotSaveException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			btnContinuer.setVisible(false);
 		}
