@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//src/fr/quizz/controller/DashboardController.java=UTF-8
+encoding//src/fr/quizz/controller/PlayerController.java=UTF-8
+encoding//src/fr/quizz/controller/QuestionController.java=UTF-8
+encoding//src/fr/quizz/model/Model.java=UTF-8
+encoding//src/fr/quizz/model/PlayerModel.java=UTF-8
+encoding//src/fr/quizz/view/Index.java=UTF-8
+encoding//src/fr/quizz/view/dashboard/Dashboard.java=UTF-8
+encoding//src/fr/quizz/view/player/Add.java=UTF-8
+encoding//src/fr/quizz/view/player/Edit.java=UTF-8
+encoding//src/fr/quizz/view/player/Login.java=UTF-8
+encoding//src/fr/quizz/view/player/ManagePlayer.java=UTF-8
+encoding//src/fr/quizz/view/player/Profil.java=UTF-8
+encoding//src/fr/quizz/view/question/Add.java=UTF-8
+encoding//src/fr/quizz/view/question/Edit.java=UTF-8
+encoding//src/fr/quizz/view/question/ManageQuestion.java=UTF-8
+encoding//src/fr/quizz/view/question/ManageTableQuestion.java=UTF-8
