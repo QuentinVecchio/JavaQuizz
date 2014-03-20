@@ -39,7 +39,7 @@ public class Login extends JDialog {
 	public void initComponents(){
 		setTitle("Connexion");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(new Dimension(300,150));
+		setSize(new Dimension(300,200));
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 		JPanel panelLogin = new JPanel();
@@ -57,8 +57,8 @@ public class Login extends JDialog {
 		panelMDP.add(new JLabel("Mot de passe:"));
 		panelMDP.add(m_password);
 		
-		m_login.setPreferredSize(new Dimension(200,30));
-		m_password.setPreferredSize(new Dimension(200,30));
+		m_login.setPreferredSize(new Dimension(250,30));
+		m_password.setPreferredSize(new Dimension(250,30));
 		
 		add(panelMain, BorderLayout.CENTER);
 		m_logButton.addActionListener(new ActionLogin());
@@ -88,7 +88,6 @@ public class Login extends JDialog {
 					}	
 				} catch (DatabaseConnexionException e1) {
 					JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
-					e1.printStackTrace();
 				}
 						
 			}else{

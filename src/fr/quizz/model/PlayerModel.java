@@ -11,6 +11,7 @@ import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.DeleteMultipleException;
 import fr.quizz.exception.PlayerNotSaveException;
 import fr.quizz.exception.UpdatePlayerException;
+import fr.quizz.main.Launcher;
 
 	/**
 	 * 	 This class allow to manage the player table of the database
@@ -52,7 +53,7 @@ public class PlayerModel extends Model {
 		catch(SQLException e)
 		{
 			System.err.println("Problème avec la requète exist : " + sql);
-			e.printStackTrace();
+			Launcher.printException(e);
 		}finally{
 			closeResultSet(res);
 			closeStatement(requete);
@@ -93,7 +94,7 @@ public class PlayerModel extends Model {
         catch(SQLException e)
         {
     		rollback(connexion);
-            System.err.println("Probleme avec lors de la transaction" + e);
+    		Launcher.printException(e);
         }finally{
             closeStatement(requete);
             closeConnection(connexion);	
@@ -131,7 +132,7 @@ public class PlayerModel extends Model {
             }
             
         }catch(SQLException e){
-        	e.printStackTrace();
+        	Launcher.printException(e);
         	System.err.println("Probleme avec la requete : " + sql);
         }finally{
             closeResultSet(res);
@@ -160,7 +161,7 @@ public class PlayerModel extends Model {
             }
       
         }catch(SQLException e){
-        	e.printStackTrace();
+        	Launcher.printException(e);
         	System.err.println("Probleme avec la requete : " + sql);
         }finally{
             closeStatement(requete);
@@ -193,7 +194,7 @@ public class PlayerModel extends Model {
             
         }catch(SQLException e){
             System.err.println("Probleme avec la requete getAllQuestion : " + sql);
-            e.printStackTrace();
+            Launcher.printException(e);
         }finally{
         	closeResultSet(res);
             closeStatement(requete);

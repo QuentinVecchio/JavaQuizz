@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import fr.quizz.core.Quizz;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.QuizzNotSaveException;
+import fr.quizz.main.Launcher;
 
 public class QuizzModel extends Model {
 
@@ -22,7 +23,7 @@ public class QuizzModel extends Model {
      * @throws DatabaseConnexionException if connection is lost
      * @throws QuizzNotSaveException if insert fails
      */
-    public int savePlayer(Quizz quizz) throws DatabaseConnexionException, QuizzNotSaveException{
+    public int saveQuizz(Quizz quizz) throws DatabaseConnexionException, QuizzNotSaveException{
     	if(quizz.getCode() != -1) return -1;
     	
     	Connection connexion = getConnection();
@@ -45,7 +46,7 @@ public class QuizzModel extends Model {
             }
             
         }catch(SQLException e){
-        	e.printStackTrace();
+        	Launcher.printException(e);
         	System.err.println("Probleme avec la requete : " + sql);
         }finally{
             closeResultSet(res);

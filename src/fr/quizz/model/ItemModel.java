@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import fr.quizz.core.Item;
 import fr.quizz.exception.DatabaseConnexionException;
 import fr.quizz.exception.ItemNotSaveException;
+import fr.quizz.main.Launcher;
 
 public class ItemModel extends Model {
 
@@ -45,7 +46,7 @@ public class ItemModel extends Model {
             }
             
         }catch(SQLException e){
-        	e.printStackTrace();
+        	Launcher.printException(e);
         	System.err.println("Probleme avec la requete : " + sql);
         }finally{
             closeResultSet(res);
