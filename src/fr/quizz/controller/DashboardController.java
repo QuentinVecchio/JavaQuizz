@@ -41,7 +41,7 @@ public class DashboardController extends Controller {
 		return profil;
 	}
 	
-	public JPanel showQuizz(int nbQuestion, String keyWord) throws DatabaseConnexionException{
+	public JPanel showQuizz(int nbQuestion, String keyWord,Player p) throws DatabaseConnexionException{
 		if(nbQuestion < 0 || keyWord.trim().length() == 0)
 		{
 			String erreur = "";
@@ -85,7 +85,7 @@ public class DashboardController extends Controller {
 						maxElt --;
 					}
 				}
-				Index pQ = new Index(selectedQuestion);
+				Index pQ = new Index(selectedQuestion,p);
 				return pQ;
 			}
 		}

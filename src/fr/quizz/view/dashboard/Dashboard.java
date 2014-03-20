@@ -190,7 +190,7 @@ public class Dashboard extends JFrame{
 		class ActionValide implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				try {
-					setViewCenter(controller.showQuizz(Integer.parseInt(nbQuestion.getText()),textKeyWord.getText()));
+					setViewCenter(controller.showQuizz(Integer.parseInt(nbQuestion.getText()),textKeyWord.getText(),p));
 					setVisible(false);
 				} catch (DatabaseConnexionException e1) {
 					JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");

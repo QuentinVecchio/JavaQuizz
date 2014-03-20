@@ -13,14 +13,14 @@ public class Quizz {
 	 * @param code
 	 * @param numberQuestions
 	 * @param answers
-	 * @param date
+	 * @param d
 	 * @param score
 	 */
-	public Quizz(int code, int numberQuestions,	Date date, int score, int code_joueur) {
+	public Quizz(int code, int numberQuestions,Date d, int score, int code_joueur) {
 		super();
 		this.code = code;
 		this.numberQuestions = numberQuestions;
-		this.date = date;
+		this.date = d;
 		this.score = score;
 		this.code_joueur = code_joueur;
 	}
