@@ -41,11 +41,12 @@ public class DashboardController extends Controller {
 		return profil;
 	}
 	
-	public JPanel showQuizz(int nbQuestion, String keyWord,Player p) throws DatabaseConnexionException{
-		if(nbQuestion < 0 || keyWord.trim().length() == 0)
+	public JPanel showQuizz(String NbQuestion, String keyWord,Player p) throws DatabaseConnexionException{
+		if(NbQuestion.trim().length() == 0 || keyWord.trim().length() == 0)
 		{
+			int nb = Integer.parseInt(NbQuestion);
 			String erreur = "";
-			if(nbQuestion < 0)
+			if(NbQuestion.trim().length() == 0 || nb <= 0)
 				erreur = "Nombre de question non valide.\n";
 			else
 				erreur = "Mot clé non valide.";
@@ -54,10 +55,7 @@ public class DashboardController extends Controller {
 		}
 		else
 		{
-			/*
-			 * Passer à la vue pQ
-			 * Un array list de quizz
-			 */
+			int nb = Integer.parseInt(NbQuestion);
 			final QuestionModel questionModel = new QuestionModel();
 			ArrayList<Question> listQuestion =  questionModel.getAllQuestionByTexteQuestion(keyWord);
 			if(listQuestion.size() == 0){
@@ -66,7 +64,7 @@ public class DashboardController extends Controller {
 			}else{
 
 				final Random s = new Random();
-				int maxElt = (nbQuestion < listQuestion.size()) ?nbQuestion: listQuestion.size();
+				int maxElt = (nb < listQuestion.size()) ?nb: listQuestion.size();
 				final int max = maxElt;
 				ArrayList<Integer> selectIndex = new ArrayList<Integer>();
 				ArrayList<Question> selectedQuestion = new ArrayList<Question>();
