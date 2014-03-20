@@ -28,6 +28,7 @@ public class Dashboard extends JFrame{
 	private JPanel panelButton = new JPanel();
 	private JButton btnManagePlayer = new JButton("Gestion Joueurs");
 	private JButton btnManageQuestion = new JButton("Gestion Questions");
+	private JButton btnManggeAnswer = new JButton("Gestion des réponses");
 	private JButton btnQuizz = new JButton("Quizz");
 	private JButton btnUser = new JButton("Profil");
 	private JButton btnQuit = new JButton("Quitter");
@@ -70,7 +71,7 @@ public class Dashboard extends JFrame{
 	
 	private void panelButtonConstructor()
 	{
-		panelButton.setLayout(new GridLayout(9,1));
+		panelButton.setLayout(new GridLayout(10,1));
 		//Affichage du nom
 			JLabel hello = new JLabel(" Bonjour " + this.p.getName(),SwingConstants.CENTER);
 			panelButton.add(hello);
@@ -86,9 +87,12 @@ public class Dashboard extends JFrame{
 		//Construction bouton manage Gamer
 			panelButton.add(btnManagePlayer);
 			btnManagePlayer.addActionListener(new ActionManagePlayer());
-		//Construction bouton edit Question
+		//Construction bouton manage Question
 			panelButton.add(btnManageQuestion);
 			btnManageQuestion.addActionListener(new ActionManageQuestion());
+		//Construction bouton manage answer
+			panelButton.add(btnManggeAnswer);
+			btnManggeAnswer.addActionListener(new ActionManageAnswer());
 	}
 	
 	private void panelPlayer()
@@ -149,6 +153,16 @@ public class Dashboard extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
 			//TODO fermer la BDD !!!
+		}
+	}
+	
+	class ActionManageAnswer implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			try {
+				setViewCenter(controller.showManagerItemPanel());
+			} catch (DatabaseConnexionException e1) {
+				JOptionPane.showMessageDialog(null, "La connexion a la base de donnees n'a pas pu être effectuée !");
+			}
 		}
 	}
 	

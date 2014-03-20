@@ -6,6 +6,7 @@ encoding//src/fr/quizz/model/Model.java=UTF-8
 encoding//src/fr/quizz/model/PlayerModel.java=UTF-8
 encoding//src/fr/quizz/view/Index.java=UTF-8
 encoding//src/fr/quizz/view/dashboard/Dashboard.java=UTF-8
+encoding//src/fr/quizz/view/item/ManageTable.java=UTF-8
 encoding//src/fr/quizz/view/player/Add.java=UTF-8
 encoding//src/fr/quizz/view/player/Edit.java=UTF-8
 encoding//src/fr/quizz/view/player/Login.java=UTF-8
