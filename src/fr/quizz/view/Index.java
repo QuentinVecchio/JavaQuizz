@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.sql.Date;
 
 import javax.swing.BorderFactory;
@@ -144,7 +145,8 @@ public class Index extends JPanel {
 	
 	private void finish() throws DatabaseConnexionException, QuizzNotSaveException, ItemNotSaveException
 	{
-		this.quizz = new Quizz(-1,nbQuestion,null,nbBonneRep,p.getCode());
+		Calendar c = Calendar.getInstance();
+		this.quizz = new Quizz(-1,nbQuestion,c.get(Calendar.YEAR)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.DAY_OF_MONTH),nbBonneRep,p.getCode());
 		//Remplissage des code_quizz
 		int indexQuizz = modelQuizz.saveQuizz(quizz);
 		for(int i=0;i!= indexQuestion;i++)
