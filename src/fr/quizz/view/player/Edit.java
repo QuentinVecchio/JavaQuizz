@@ -34,6 +34,9 @@ public class Edit extends JDialog {
 	private JCheckBox checkAdmin = new JCheckBox("Admin");
 	private JCheckBox checkPlayer = new JCheckBox("Joueur");
 	
+	private static Dimension dimTextDefault = new Dimension(200,30);
+	
+	
 	public Edit(Player p) {
 		super();
 		setTitle("Edition d'un joueur");
@@ -47,18 +50,23 @@ public class Edit extends JDialog {
 		panelName.add(new JLabel("Login : "));
 		textName.setText(p.getName());
 		panelName.add(textName);
-		textName.setPreferredSize(new Dimension(200,30));
+		textName.setPreferredSize(dimTextDefault);
 	//Panel Mail
 		panelMail.add(new JLabel("Email : "));
 		textMail.setText(p.getMail());
 		panelMail.add(textMail);
-		textMail.setPreferredSize(new Dimension(200,30));
+		textMail.setPreferredSize(dimTextDefault);
 	//Panel Password
 		panelPassword.add(new JLabel("Mot de passe : "));
 		textPassword.setText(p.getPassword());
 		panelPassword.add(textPassword);
-		textPassword.setPreferredSize(new Dimension(200,30));
+		textPassword.setPreferredSize(dimTextDefault);
 	//Panel Check
+		if(p.getAdmin() == 1){
+			checkAdmin.setSelected(true);
+		}else{
+			checkPlayer.setSelected(true);
+		}
 		panelCheck.add(checkAdmin);
 		panelCheck.add(checkPlayer);
 	//Panel Button
