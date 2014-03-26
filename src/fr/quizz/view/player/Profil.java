@@ -1,6 +1,7 @@
 package fr.quizz.view.player;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +36,8 @@ public class Profil extends JPanel {
 	private JCheckBox checkAdmin = new JCheckBox("Admin");
 	private JCheckBox checkPlayer = new JCheckBox("Joueur");
 	
+	private static Dimension dimTextDefault = new Dimension(300,30);
+	
 	public Profil(Player p) {
 		super();
 	//Affectation de Player
@@ -43,25 +46,32 @@ public class Profil extends JPanel {
 		panelName.add(new JLabel("Login : "));
 		textName.setText(p.getName());
 		panelName.add(textName);
-		textName.setPreferredSize(new Dimension(200,30));
+		textName.setPreferredSize(dimTextDefault);
 	//Panel Mail
 		panelMail.add(new JLabel("Email : "));
 		textMail.setText(p.getMail());
 		panelMail.add(textMail);
-		textMail.setPreferredSize(new Dimension(200,30));
+		textMail.setPreferredSize(dimTextDefault);
 	//Panel Password
 		panelPassword.add(new JLabel("Mot de passe : "));
 		textPassword.setText(p.getPassword());
 		panelPassword.add(textPassword);
-		textPassword.setPreferredSize(new Dimension(200,30));
+		textPassword.setPreferredSize(dimTextDefault);
 	//Panel Check
 		if(p.getAdmin() == 1){
 			checkAdmin.setSelected(true);
 		}else{
 			checkPlayer.setSelected(true);
 		}
-		panelCheck.add(checkAdmin);
-		panelCheck.add(checkPlayer);
+		JLabel lStatut = new JLabel("Statut : ");
+		//lStatut.setPreferredSize(dimTextDefault);
+		panelCheck.add(lStatut);
+		
+		JPanel panCheck = new JPanel(new FlowLayout());
+		panCheck.setPreferredSize(dimTextDefault);
+		panCheck.add(checkAdmin);
+		panCheck.add(checkPlayer);
+		panelCheck.add(panCheck);
 	//Panel Button
 		panelButton.add(btnReset);
 		panelButton.add(btnValide);
